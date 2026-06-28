@@ -1,0 +1,40 @@
+export type Vehicle = {
+  id: string;
+  brand: string;
+  model: string;
+  year: number;
+  price: number;
+  mileage: number;
+  fuelType: string;
+  transmission: string;
+  imageUrls: string[];
+  registeredStatus: string;
+  location: string;
+  inspectionScore?: number;
+  isSold: boolean;
+  createdAt: { seconds: number } | null;
+  bodyType?: string;
+  cc?: string;
+  features?: string[];
+  description?: string;
+  color?: string;
+  doors?: number;
+  seatingCapacity?: number;
+  auctionEndDate?: string;
+  startingBid?: number;
+  currentBid?: number;
+  tagline?: string;
+  auctionGrade?: string;
+  condition?: string;
+  whyChooseUs?: string[];
+};
+
+export type Inquiry = {
+  id?: string;
+  vehicleId: string;
+  buyerName: string;
+  buyerPhone: string;
+  type: string;
+  message: string;
+  createdAt: { seconds: number } | null;
+};

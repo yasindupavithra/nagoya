@@ -1,0 +1,31 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/admin/**",
+        "function": "nextServer"
+      },
+      {
+        "source": "/inventory/**",
+        "function": "nextServer"
+      },
+      {
+        "source": "/vehicle/**",
+        "function": "nextServer"
+      },
+      {
+        "source": "**",
+        "function": "nextServer"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions"
+  }
+}
