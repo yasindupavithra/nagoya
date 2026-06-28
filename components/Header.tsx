@@ -73,6 +73,7 @@ export default function Header() {
             >
               {item.label}
             </a>
+          ))}
         </nav>
 
         <button
