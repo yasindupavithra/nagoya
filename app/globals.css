@@ -35,11 +35,11 @@
   --border-focus: var(--brand-red);
 
   /* Shadows */
-  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-  --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,0.10);
-  --shadow-xl: 0 32px 80px rgba(0,0,0,0.14);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.10);
+  --shadow-xl: 0 32px 80px rgba(0, 0, 0, 0.14);
   --shadow-red: 0 8px 32px rgba(211, 47, 47, 0.20);
   --shadow-red-lg: 0 16px 48px rgba(211, 47, 47, 0.28);
 
@@ -67,69 +67,151 @@
    ANIMATIONS
    ═══════════════════════════════════════════════════ */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(32px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutLeft {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 var(--brand-red-glow); }
-  50% { box-shadow: 0 0 0 14px transparent; }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--brand-red-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 0 14px transparent;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes countUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .animate-fade-in-up {
@@ -144,17 +226,36 @@
   animation: scaleIn var(--duration-normal) var(--ease-spring) both;
 }
 
-.stagger-1 { animation-delay: 0.05s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.15s; }
-.stagger-4 { animation-delay: 0.2s; }
-.stagger-5 { animation-delay: 0.25s; }
-.stagger-6 { animation-delay: 0.3s; }
+.stagger-1 {
+  animation-delay: 0.05s;
+}
+
+.stagger-2 {
+  animation-delay: 0.1s;
+}
+
+.stagger-3 {
+  animation-delay: 0.15s;
+}
+
+.stagger-4 {
+  animation-delay: 0.2s;
+}
+
+.stagger-5 {
+  animation-delay: 0.25s;
+}
+
+.stagger-6 {
+  animation-delay: 0.3s;
+}
 
 /* ═══════════════════════════════════════════════════
    RESETS & GLOBALS
    ═══════════════════════════════════════════════════ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -180,7 +281,10 @@ a {
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font: inherit;
   border: none;
   outline: none;
@@ -195,7 +299,8 @@ img {
   display: block;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -228,9 +333,17 @@ main {
   gap: 24px;
 }
 
-.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 
 .flex {
   display: flex;
@@ -296,8 +409,8 @@ main {
 }
 
 .site-header.scrolled {
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-  background: rgba(255,255,255,0.97);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.97);
 }
 
 .nav-bar {
@@ -535,7 +648,7 @@ main {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
   opacity: 0;
   transition: opacity var(--duration-fast);
 }
@@ -583,7 +696,7 @@ main {
 
 .button.outline:hover {
   border-color: var(--text-primary);
-  background: rgba(0,0,0,0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .button.sm {
@@ -672,7 +785,7 @@ main {
 .card-media-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
   opacity: 0;
   transition: opacity var(--duration-normal);
 }
@@ -770,7 +883,7 @@ main {
   gap: 4px;
 }
 
-.card-meta-info span + span::before {
+.card-meta-info span+span::before {
   content: '·';
   margin: 0 4px;
   color: var(--border);
@@ -910,13 +1023,11 @@ main {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(17, 17, 17, 0.75) 0%,
-    rgba(17, 17, 17, 0.45) 40%,
-    rgba(211, 47, 47, 0.2) 70%,
-    rgba(17, 17, 17, 0.6) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(17, 17, 17, 0.75) 0%,
+      rgba(17, 17, 17, 0.45) 40%,
+      rgba(211, 47, 47, 0.2) 70%,
+      rgba(17, 17, 17, 0.6) 100%);
   z-index: 2;
 }
 
@@ -934,8 +1045,10 @@ main {
 }
 
 .hero-glass-card {
-  background: transparent; /* Changed from rgba for a completely clear look if blur is removed, though keeping some darkness might help readability. Wait, I will just remove the blur */
-  background: rgba(17, 17, 17, 0.35); /* Keeps the dark overlay for text readability */
+  background: transparent;
+  /* Changed from rgba for a completely clear look if blur is removed, though keeping some darkness might help readability. Wait, I will just remove the blur */
+  background: rgba(17, 17, 17, 0.35);
+  /* Keeps the dark overlay for text readability */
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 40px;
   border-radius: 24px;
@@ -976,7 +1089,7 @@ main {
   max-width: 860px;
   letter-spacing: -0.04em;
   animation: fadeInUp 0.7s var(--ease-out) 0.1s both;
-  text-shadow: 0 4px 32px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
 }
 
 .hero-copy p {
@@ -1180,7 +1293,7 @@ main {
   display: grid;
   place-items: center;
   margin: 0 auto 14px;
-  background: linear-gradient(135deg, rgba(211,47,47,0.1), rgba(211,47,47,0.04));
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.04));
   color: var(--brand-red);
   font-size: 1.3rem;
 }
@@ -1427,7 +1540,7 @@ main {
 }
 
 .cta-banner .button:hover {
-  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -2176,9 +2289,9 @@ hr {
 
 .banner {
   border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, rgba(211,47,47,0.08), rgba(211,47,47,0.02));
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.08), rgba(211, 47, 47, 0.02));
   padding: 32px;
-  border: 1px solid rgba(211,47,47,0.1);
+  border: 1px solid rgba(211, 47, 47, 0.1);
 }
 
 .breadcrumb {
@@ -2360,7 +2473,9 @@ hr {
     padding: 0 16px;
   }
 
-  .grid-2, .grid-3, .grid-4 {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
     grid-template-columns: 1fr;
   }
 
