@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 import { fetchVehicles } from '../lib/firestore';
 import type { Vehicle } from '../lib/types';
 import LatestArrivalCard from '../components/LatestArrivalCard';
@@ -58,14 +59,6 @@ export default function HomePage() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
-  const slides = [
-    { url: '/jdm_hero_banner_1782665552455.png', showText: false },
-    { url: '/toyota_collection_1_1782670958978.png', showText: false },
-    { url: '/honda_collection_1782674340433.png', showText: false },
-    { url: '/toyota_collection_2_1782670991656.png', showText: false },
-    { url: '/audi_hero_banner_1782665497030.png', showText: false },
-  ];
-  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     // Trigger hero entrance after first paint
@@ -87,16 +80,7 @@ export default function HomePage() {
       .finally(() => setIsLoadingVehicles(false));
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
 
-  const handleDotClick = (index: number) => {
-    setActiveSlide(index);
-  };
 
   // Always show Firestore vehicles if loaded; fallback to sample only while loading
   const displayVehicles = isLoadingVehicles ? sampleVehicles : vehicles;
@@ -119,40 +103,53 @@ export default function HomePage() {
         className={`hero-section${heroVisible ? ' hero-visible' : ''}`}
         style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
       >
-        {/* Background Slides with parallax */}
-        <div
-          className="hero-slider"
-          style={{ transform: `translateY(calc(var(--scroll-y) * 0.45))` }}
-        >
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className={`hero-slide ${index === activeSlide ? 'active' : ''}`}
-              style={{ backgroundImage: `url(${slide.url})` }}
-            />
-          ))}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="/Gemini_Generated_Image_q6r8fnq6r8fnq6r8.png"
+            alt="Nagoya Auto Hero Banner"
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center'
+            }}
+          />
         </div>
 
-        <div className="hero-overlay" />
-
-        <div className="hero-copy container">
-          <div className="hero-glass-card visible">
-            <p className="eyebrow">SRI LANKA'S MOST TRUSTED CAR DEALERSHIP</p>
-            <h1>Find Your Perfect<br />Car</h1>
-            <p style={{ marginTop: '12px' }}>Browse verified vehicles, transparent pricing, and full inspection reports.</p>
+        <div style={{ position: 'absolute', bottom: '18%', left: '4%', zIndex: 2 }}>
+          <div style={{ display: 'inline-block' }}>
+            <p style={{ color: '#fff', fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 500, margin: 0, textShadow: '0 4px 8px rgba(0,0,0,0.8)' }}>
+              For All Your Vehicle Solutions
+            </p>
+            <h1 style={{ color: '#fff', fontSize: 'clamp(3.5rem, 7vw, 5.5rem)', lineHeight: 1.1, fontWeight: 800, margin: '0', textShadow: '0 4px 12px rgba(0,0,0,0.8)', letterSpacing: '-1px' }}>
+              Nagoya <span style={{ color: '#E52329' }}>Auto Auction</span>
+            </h1>
           </div>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="hero-dots">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleDotClick(index)}
-              className={`hero-dot ${index === activeSlide ? 'active' : ''}`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+        {/* Right Side Floating Banner */}
+        <div className="hero-floating-banner" style={{
+          position: 'absolute',
+          bottom: '22%',
+          right: '5%',
+          width: 'clamp(280px, 25vw, 360px)',
+          height: 'clamp(460px, 60vh, 680px)',
+          backgroundColor: '#000',
+          borderRadius: '24px',
+          boxShadow: '0 40px 80px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05)',
+          overflow: 'hidden',
+          zIndex: 10,
+          border: '8px solid #0a0a0a',
+          animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both'
+        }}>
+          <Image
+            src="/Gemini_Generated_Image_ewmootewmootewmo.png"
+            alt="Promotional Banner"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
         </div>
       </section>
 
@@ -165,16 +162,16 @@ export default function HomePage() {
               <p>Find your perfect vehicle in seconds</p>
             </div>
             <div style={{ display: 'flex', gap: '8px', background: 'var(--surface-alt)', padding: '6px', borderRadius: '12px' }}>
-              <button 
-                className={`button ${conditionFilter === '' ? 'danger' : 'outline'}`} 
+              <button
+                className={`button ${conditionFilter === '' ? 'danger' : 'outline'}`}
                 style={{ padding: '8px 16px', fontSize: '0.9rem', ...(conditionFilter === '' ? {} : { border: 'none' }) }}
                 onClick={() => setConditionFilter('')}>All</button>
-              <button 
-                className={`button ${conditionFilter === 'Unregistered' ? 'danger' : 'outline'}`} 
+              <button
+                className={`button ${conditionFilter === 'Unregistered' ? 'danger' : 'outline'}`}
                 style={{ padding: '8px 16px', fontSize: '0.9rem', ...(conditionFilter === 'Unregistered' ? {} : { border: 'none' }) }}
                 onClick={() => setConditionFilter('Unregistered')}>Brand New</button>
-              <button 
-                className={`button ${conditionFilter === 'Registered' ? 'danger' : 'outline'}`} 
+              <button
+                className={`button ${conditionFilter === 'Registered' ? 'danger' : 'outline'}`}
                 style={{ padding: '8px 16px', fontSize: '0.9rem', ...(conditionFilter === 'Registered' ? {} : { border: 'none' }) }}
                 onClick={() => setConditionFilter('Registered')}>Used</button>
             </div>
@@ -239,7 +236,7 @@ export default function HomePage() {
             </a>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+          <div className="grid grid-4" style={{ gap: '16px' }}>
             {isLoadingVehicles ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 0' }}>
                 <p style={{ color: '#888' }}>Loading latest arrivals...</p>
@@ -249,7 +246,7 @@ export default function HomePage() {
                 <p>No vehicles match your current filters. Try adjusting your search.</p>
               </div>
             ) : (
-              filteredVehicles.slice(0, 9).map((vehicle) => (
+              filteredVehicles.slice(0, 8).map((vehicle) => (
                 <LatestArrivalCard key={vehicle.id} vehicle={vehicle} />
               ))
             )}
@@ -311,7 +308,7 @@ export default function HomePage() {
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle at 20% 150%, #fff 0%, transparent 50%), radial-gradient(circle at 80% -50%, #fff 0%, transparent 50%)' }} />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Noto Sans Sinhala', sans-serif", fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 700, margin: 0, textShadow: '0 4px 20px rgba(0,0,0,0.3)', lineHeight: 1.2 }}>
-            ඔබගේ සිහින වාහනය<br/>විශ්වාසයෙන් යුතුව මිලදී ගන්න
+            ඔබගේ සිහින වාහනය<br />විශ්වාසයෙන් යුතුව මිලදී ගන්න
           </h2>
           <div style={{ width: '60px', height: '4px', backgroundColor: '#fff', margin: '24px auto', borderRadius: '2px', opacity: 0.8 }} />
           <p style={{ fontFamily: "'Noto Sans Sinhala', sans-serif", marginTop: '16px', fontSize: '1.2rem', opacity: 0.9, fontWeight: 500 }}>

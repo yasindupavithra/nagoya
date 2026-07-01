@@ -833,9 +833,9 @@ main {
    ═══════════════════════════════════════════════════ */
 .hero-section {
   position: relative;
-  height: 100vh;
-  min-height: 620px;
-  max-height: 920px;
+  height: 90vh;
+  min-height: 580px;
+  max-height: 850px;
   overflow: hidden;
   /* Entrance scale-in */
   opacity: 0;
@@ -2400,6 +2400,10 @@ hr {
 
   .hero-copy h1 {
     font-size: 1.8rem;
+  }
+
+  .hero-floating-banner {
+    display: none !important;
   }
 
   .search-panel {
