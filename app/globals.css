@@ -2517,6 +2517,14 @@ hr {
     display: block;
   }
 
+  .brand-group img {
+    height: 48px !important;
+  }
+
+  .brand-name-block {
+    display: none !important;
+  }
+
   .hero-section {
     min-height: calc(100dvh - 64px) !important;
     height: calc(100dvh - 64px) !important;
