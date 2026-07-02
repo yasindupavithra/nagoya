@@ -53,6 +53,7 @@ export default function Header() {
         </div>
       </div>
       <div className="container nav-bar">
+        <div className="mobile-left-spacer"></div>
         <a href="/" className="brand-group">
           <img 
             src="/logo.png" 

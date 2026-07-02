@@ -144,7 +144,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div style={{ position: 'absolute', bottom: '18%', left: '4%', zIndex: 2 }}>
+        <div className="hero-text-container" style={{ position: 'absolute', bottom: '18%', left: '4%', zIndex: 2 }}>
           <div style={{ display: 'inline-block' }}>
             <p style={{ color: '#fff', fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 500, margin: 0, textShadow: '0 4px 8px rgba(0,0,0,0.8)' }}>
               For All Your Vehicle Solutions

@@ -426,6 +426,10 @@ main {
   height: 72px;
 }
 
+.mobile-left-spacer {
+  display: none;
+}
+
 .brand-group {
   display: flex;
   align-items: center;
@@ -2476,7 +2480,7 @@ hr {
   .grid-2,
   .grid-3,
   .grid-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .search-fields {
@@ -2491,8 +2495,17 @@ hr {
     grid-template-columns: 1fr;
   }
 
+  .mobile-left-spacer {
+    display: block;
+    width: 40px;
+  }
+
   .nav-links {
-    display: none;
+    display: none !important;
+  }
+
+  .hidden-mobile {
+    display: none !important;
   }
 
   .hamburger {
@@ -2506,6 +2519,29 @@ hr {
 
   .hero-section {
     min-height: 380px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 32px 16px !important;
+    height: auto !important;
+  }
+
+  .hero-text-container {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-text-container div {
+    display: block !important;
+  }
+
+  .hero-text-container p,
+  .hero-text-container h1 {
+    text-align: center !important;
   }
 
   .hero-copy {
@@ -2525,7 +2561,7 @@ hr {
     max-height: none !important;
     bottom: auto !important;
     right: auto !important;
-    margin-top: 32px;
+    margin: 0 auto 32px auto !important;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
   }
 

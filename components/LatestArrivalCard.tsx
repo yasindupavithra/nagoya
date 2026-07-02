@@ -26,7 +26,7 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           e.currentTarget.style.boxShadow = 'none';
         }}
       >
-        <div style={{ position: 'relative', height: '240px', backgroundColor: '#f5f5f5', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', height: 'clamp(140px, 35vw, 240px)', backgroundColor: '#f5f5f5', overflow: 'hidden' }}>
           <div style={{
             position: 'absolute',
             top: '16px',
@@ -80,9 +80,9 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           )}
         </div>
 
-        <div style={{ padding: '24px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: 'clamp(12px, 3vw, 24px) clamp(10px, 2vw, 20px)', flex: 1, display: 'flex', flexDirection: 'column' }}>
           <h3 style={{
-            fontSize: '1.1rem',
+            fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
             fontWeight: 800,
             textTransform: 'uppercase',
             margin: '0 0 4px 0',
@@ -92,16 +92,17 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           </h3>
 
           <div style={{
-            fontSize: '1.25rem',
+            fontSize: 'clamp(0.9rem, 3vw, 1.25rem)',
             fontWeight: 900,
             color: '#ff2424',
-            marginBottom: '16px'
+            marginBottom: '12px'
           }}>
             Rs {vehicle.price.toLocaleString('en-LK')}
           </div>
           <div style={{
             display: 'flex',
-            gap: '16px',
+            flexWrap: 'wrap',
+            gap: 'clamp(6px, 1.5vw, 16px)',
             fontSize: '0.7rem',
             fontWeight: 700,
             color: '#666',
@@ -122,24 +123,25 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           <div style={{
             marginTop: 'auto',
             borderTop: '1px solid #eaeaea',
-            paddingTop: '16px',
+            paddingTop: '12px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: '0.8rem',
-            fontWeight: 700,
+            fontSize: 'clamp(0.7rem, 2vw, 0.8rem)',
+            fontWeight: 800,
+            textTransform: 'uppercase',
           }}>
-            <span>VIEW DETAILS</span>
+            <span>EXPLORE MORE</span>
             <span style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              width: '24px',
-              height: '24px',
+              width: 'clamp(18px, 4vw, 24px)',
+              height: 'clamp(18px, 4vw, 24px)',
               borderRadius: '50%',
-              backgroundColor: '#f0f0f0',
-              color: '#333',
-              fontSize: '0.8rem',
+              backgroundColor: '#ff2424',
+              color: '#fff',
+              fontSize: 'clamp(0.6rem, 1.5vw, 0.8rem)',
             }}>➔</span>
           </div>
         </div>
