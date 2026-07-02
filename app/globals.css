@@ -2500,6 +2500,22 @@ hr {
     width: 40px;
   }
 
+  .brand-group img {
+    height: 38px !important;
+  }
+
+  .brand-name-block {
+    display: flex !important;
+  }
+
+  .brand-main {
+    font-size: 1.1rem !important;
+  }
+
+  .brand-tagline {
+    font-size: 0.6rem !important;
+  }
+
   .nav-links {
     display: none !important;
   }
@@ -2515,14 +2531,6 @@ hr {
   .mobile-menu,
   .mobile-menu-overlay {
     display: block;
-  }
-
-  .brand-group img {
-    height: 48px !important;
-  }
-
-  .brand-name-block {
-    display: none !important;
   }
 
   .hero-section {
@@ -2571,7 +2579,7 @@ hr {
     bottom: auto !important;
     right: auto !important;
     margin: 0 auto 32px auto !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
   }
 
   .search-panel {
