@@ -2468,6 +2468,18 @@ hr {
   }
 }
 
+.inventory-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.inventory-sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + var(--topbar-height) + 24px);
+}
+
 @media (max-width: 768px) {
   :root {
     --header-height: 64px;
@@ -2522,6 +2534,14 @@ hr {
 
   .hidden-mobile {
     display: none !important;
+  }
+
+  .inventory-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .inventory-sidebar {
+    position: static !important;
   }
 
   .hamburger {

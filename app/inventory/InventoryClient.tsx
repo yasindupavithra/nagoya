@@ -102,9 +102,9 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
             </div>
           )}
 
-          <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 28, alignItems: 'start' }}>
+          <div className="inventory-layout">
             {/* Sidebar Filters */}
-            <div className="card panel" style={{ position: 'sticky', top: 'calc(var(--header-height) + var(--topbar-height) + 24px)' }}>
+            <div className="card panel inventory-sidebar">
               <h3 style={{ fontSize: '1.1rem', marginBottom: 8 }}>Filters</h3>
 
               <div className="field">
