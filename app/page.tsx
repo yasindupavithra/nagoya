@@ -112,10 +112,11 @@ export default function HomePage() {
   return (
     <main>
       {/* ══════ HERO ══════ */}
-      <section
-        className={`hero-section${heroVisible ? ' hero-visible' : ''}`}
-        style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
-      >
+      <div style={{ position: 'relative' }}>
+        <section
+          className={`hero-section${heroVisible ? ' hero-visible' : ''}`}
+          style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
+        >
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
           {heroImages.map((src, idx) => (
             <div
@@ -155,6 +156,8 @@ export default function HomePage() {
           </div>
         </div>
 
+        </section>
+
         {/* Right Side Floating Banner */}
         <div className="hero-floating-banner" style={{
           position: 'absolute',
@@ -177,7 +180,7 @@ export default function HomePage() {
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         </div>
-      </section>
+      </div>
 
       {/* ══════ SEARCH PANEL ══════ */}
       <section className="search-panel container">
