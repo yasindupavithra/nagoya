@@ -32,7 +32,12 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
     setStatus('Sending inquiry...');
     try {
       await createInquiry({ vehicleId: vehicle.id, buyerName, buyerPhone, type: inquiryType, message });
-      setStatus('✅ Inquiry submitted successfully!');
+      setStatus('✅ Inquiry submitted! Redirecting to WhatsApp...');
+      
+      const whatsappText = `Hi Nagoya Auto! I'm ${buyerName} (${buyerPhone}). I am interested in the ${vehicle.year} ${vehicle.brand} ${vehicle.model} (ID: ${vehicle.id}).\n\nMessage: ${message}`;
+      const whatsappUrl = `https://wa.me/94714495632?text=${encodeURIComponent(whatsappText)}`;
+      window.open(whatsappUrl, '_blank');
+      
       setBuyerName(''); setBuyerPhone(''); setMessage('');
     } catch {
       setStatus('❌ Could not submit. Please try again.');
@@ -183,11 +188,59 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
                 <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
                   Features
                 </h2>
-                <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', listStyle: 'none', padding: 0 }}>
-                  {vehicle.features.map((f, i) => (
-                     <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#444', fontSize: '1.05rem' }}>
-                       <span style={{ color: '#e50000', fontSize: '1.4rem' }}>✓</span> {f}
-                     </li>
+                <ul style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+                  gap: '20px', 
+                  listStyle: 'none', 
+                  padding: 0 
+                }}>
+                  {vehicle.features
+                    .join(' ')
+                    .split(/✔️|✓|✅|,/)
+                    .map(f => f.trim())
+                    .filter(f => f.length > 0)
+                    .map((f, i) => (
+                      <li key={i} style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '12px', 
+                        backgroundColor: '#fff', 
+                        padding: '16px 20px', 
+                        borderRadius: '16px', 
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                        border: '1px solid #f0f0f0',
+                        color: '#333', 
+                        fontWeight: 600,
+                        fontSize: '0.95rem',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                        cursor: 'default'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(229,0,0,0.08)';
+                        e.currentTarget.style.borderColor = 'rgba(229,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'none';
+                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.04)';
+                        e.currentTarget.style.borderColor = '#f0f0f0';
+                      }}
+                      >
+                        <div style={{ 
+                          width: '28px', 
+                          height: '28px', 
+                          borderRadius: '50%', 
+                          backgroundColor: 'rgba(229,0,0,0.1)', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center',
+                          color: '#e50000',
+                          fontSize: '1rem',
+                          flexShrink: 0
+                        }}>✓</div>
+                        <span style={{ lineHeight: 1.4 }}>{f}</span>
+                      </li>
                   ))}
                 </ul>
               </div>

@@ -103,11 +103,16 @@ export default function AdminDashboardPage() {
                 <p className="text-muted" style={{ padding: '24px 0', textAlign: 'center' }}>No inquiries yet</p>
               ) : (
                 <div style={{ display: 'grid', gap: 8 }}>
-                  {inquiries.slice(0, 5).map((inq) => (
+                  {inquiries.slice(0, 5).map((inq) => {
+                    const v = vehicles.find(veh => veh.id === inq.vehicleId);
+                    const vehicleName = v ? `${v.brand} ${v.model} ${v.year}` : `Vehicle ID: ${inq.vehicleId}`;
+                    return (
                     <div key={inq.id || inq.vehicleId + inq.buyerName} className="flex-between" style={{ padding: '12px 14px', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)' }}>
                       <div>
-                        <strong style={{ fontSize: '0.9rem' }}>{inq.buyerName}</strong>
-                        <p className="text-muted" style={{ margin: '2px 0 0', fontSize: '0.78rem' }}>{inq.buyerPhone} · {inq.type}</p>
+                        <strong style={{ fontSize: '0.95rem', color: '#111' }}>{inq.buyerName}</strong>
+                        <p className="text-muted" style={{ margin: '4px 0 0', fontSize: '0.85rem' }}>{inq.buyerPhone}</p>
+                        <p style={{ margin: '6px 0 0', fontSize: '0.85rem', color: '#e50000', fontWeight: 600 }}>{vehicleName}</p>
+                        <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: '#444' }}>{inq.message}</p>
                       </div>
                       {inq.id && (
                         <button
@@ -122,7 +127,8 @@ export default function AdminDashboardPage() {
                         </button>
                       )}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
