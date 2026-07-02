@@ -59,6 +59,13 @@ export default function HomePage() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
+  const heroImages = [
+    '/Gemini_Generated_Image_q6r8fnq6r8fnq6r8.png',
+    '/Gemini_Generated_Image_i862oii862oii862.png',
+    '/Gemini_Generated_Image_ep6d0mep6d0mep6d.png'
+  ];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
 
   useEffect(() => {
     // Trigger hero entrance after first paint
@@ -70,6 +77,13 @@ export default function HomePage() {
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -91,8 +105,7 @@ export default function HomePage() {
         && (!brandFilter || v.brand === brandFilter)
         && (!yearFilter || v.year === Number(yearFilter))
         && (!typeFilter || v.bodyType === typeFilter)
-        && (!conditionFilter || v.registeredStatus === conditionFilter)
-        && !v.isSold;
+        && (!conditionFilter || v.registeredStatus === conditionFilter);
     });
   }, [displayVehicles, brandFilter, budget, yearFilter, typeFilter, conditionFilter]);
 
@@ -103,19 +116,32 @@ export default function HomePage() {
         className={`hero-section${heroVisible ? ' hero-visible' : ''}`}
         style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
       >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/Gemini_Generated_Image_q6r8fnq6r8fnq6r8.png"
-            alt="Nagoya Auto Hero Banner"
-            fill
-            priority
-            quality={100}
-            sizes="100vw"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center'
-            }}
-          />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
+          {heroImages.map((src, idx) => (
+            <div
+              key={src}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                transform: `translateX(${(idx - currentSlide) * 100}%)`,
+                transition: 'transform 1s ease-in-out',
+                willChange: 'transform'
+              }}
+            >
+              <Image
+                src={src}
+                alt={`Nagoya Auto Hero Banner ${idx + 1}`}
+                fill
+                priority={idx === 0}
+                quality={100}
+                sizes="100vw"
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center'
+                }}
+              />
+            </div>
+          ))}
         </div>
 
         <div style={{ position: 'absolute', bottom: '18%', left: '4%', zIndex: 2 }}>
@@ -134,14 +160,14 @@ export default function HomePage() {
           position: 'absolute',
           bottom: '22%',
           right: '5%',
-          width: 'clamp(280px, 25vw, 360px)',
+          width: 'clamp(250px, 22vw, 320px)',
           height: 'clamp(460px, 60vh, 680px)',
-          backgroundColor: '#000',
-          borderRadius: '24px',
-          boxShadow: '0 40px 80px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05)',
+          backgroundColor: '#fff',
+          borderRadius: '16px',
+          boxShadow: '0 24px 48px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2)',
           overflow: 'hidden',
           zIndex: 10,
-          border: '8px solid #0a0a0a',
+          border: '4px solid rgba(255, 255, 255, 0.9)',
           animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both'
         }}>
           <Image
@@ -224,7 +250,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════ LATEST ARRIVALS ══════ */}
-      <section style={{ backgroundColor: '#ffffff', padding: '64px 0', color: '#111' }}>
+      <section id="latest-arrivals" style={{ backgroundColor: '#ffffff', padding: '64px 0', color: '#111' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eaeaea', paddingBottom: '16px', marginBottom: '32px' }}>
             <h2 style={{ fontSize: '2.2rem', fontWeight: 900, textTransform: 'uppercase', margin: 0, display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -250,6 +276,72 @@ export default function HomePage() {
                 <LatestArrivalCard key={vehicle.id} vehicle={vehicle} />
               ))
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════ POPULAR BRANDS GRID ══════ */}
+      <section style={{ backgroundColor: '#fdfdfd', padding: '64px 0', borderTop: '1px solid #eaeaea' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 900, textTransform: 'uppercase', margin: 0 }}>Browse by Brand</h2>
+            <p style={{ color: '#666', marginTop: '12px', fontSize: '1.1rem' }}>Find your perfect vehicle from top global manufacturers</p>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', maxWidth: '1000px', margin: '0 auto' }}>
+            {['All', 'Toyota', 'Honda', 'Nissan', 'Suzuki', 'Mazda', 'Ford', 'Mitsubishi', 'Audi', 'BMW', 'Volkswagen', 'Mercedes-Benz', 'Kia', 'Lexus', 'Foton'].map(brand => {
+              const isActive = brandFilter === (brand === 'All' ? '' : brand);
+              const brandLogos: Record<string, string> = {
+                'Toyota': '/logos/toyota.svg',
+                'Nissan': '/logos/nissan.svg',
+                'Honda': '/logos/honda.svg',
+                'Suzuki': '/logos/suzuki.svg',
+                'Mitsubishi': '/logos/mitsubishi.svg',
+                'Mazda': '/logos/mazda.svg',
+                'BMW': '/logos/bmw.svg',
+                'Audi': '/logos/audi.svg',
+                'Kia': '/logos/kia.svg',
+                'Ford': '/logos/ford.svg',
+                'Volkswagen': '/logos/volkswagen.svg'
+              };
+              
+              return (
+              <button 
+                key={brand}
+                onClick={() => {
+                  setBrandFilter(brand === 'All' ? '' : brand);
+                  document.getElementById('latest-arrivals')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '12px',
+                  width: '130px',
+                  height: '110px',
+                  borderRadius: '16px',
+                  border: isActive ? '2px solid #e50000' : '1px solid #eaeaea',
+                  backgroundColor: isActive ? '#fffaf1' : '#fff',
+                  color: isActive ? '#e50000' : '#444',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  boxShadow: isActive ? '0 8px 24px rgba(229,0,0,0.12)' : '0 4px 12px rgba(0,0,0,0.04)',
+                  transition: 'all 0.3s ease',
+                  transform: isActive ? 'translateY(-4px)' : 'none'
+                }}
+              >
+                {brand !== 'All' && brandLogos[brand] && (
+                  <img 
+                    src={brandLogos[brand]} 
+                    alt={brand} 
+                    style={{ width: '48px', height: '48px', objectFit: 'contain' }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                  />
+                )}
+                {brand === 'All' && <span style={{ fontSize: '24px' }}>🌐</span>}
+                {brand}
+              </button>
+            )})}
           </div>
         </div>
       </section>
@@ -305,7 +397,6 @@ export default function HomePage() {
 
       {/* ══════ SINHALA BRAND BANNER ══════ */}
       <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #e50000 0%, #800000 100%)', color: '#fff', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle at 20% 150%, #fff 0%, transparent 50%), radial-gradient(circle at 80% -50%, #fff 0%, transparent 50%)' }} />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Noto Sans Sinhala', sans-serif", fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 700, margin: 0, textShadow: '0 4px 20px rgba(0,0,0,0.3)', lineHeight: 1.2 }}>
             ඔබගේ සිහින වාහනය<br />විශ්වාසයෙන් යුතුව මිලදී ගන්න

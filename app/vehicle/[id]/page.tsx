@@ -63,259 +63,178 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
   );
 
   return (
-    <main>
-      <div className="container">
-        <section className="section">
-          {/* Breadcrumb */}
-          <div className="breadcrumb">
-            <a href="/">Home</a>
-            <span>›</span>
-            <a href="/inventory">Inventory</a>
-            <span>›</span>
-            <span style={{ color: 'var(--text-primary)' }}>{vehicle.brand} {vehicle.model}</span>
+    <main style={{ backgroundColor: '#fafafa', color: '#111', minHeight: '100vh', paddingBottom: '120px' }}>
+      <div className="container" style={{ maxWidth: '1100px', paddingTop: '40px' }}>
+        
+        {/* Breadcrumb (Light) */}
+        <div style={{ fontSize: '0.85rem', color: '#666', marginBottom: '32px', display: 'flex', gap: '8px', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>
+          <a href="/" style={{ color: '#555', textDecoration: 'none' }}>Home</a>
+          <span>/</span>
+          <a href="/inventory" style={{ color: '#555', textDecoration: 'none' }}>Inventory</a>
+          <span>/</span>
+          <span style={{ color: '#111' }}>{vehicle.brand} {vehicle.model}</span>
+        </div>
+
+        {/* Header */}
+        <div style={{ marginBottom: '24px' }}>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '0 0 12px 0', textTransform: 'uppercase', letterSpacing: '-0.5px', color: '#111' }}>
+            {vehicle.model} {(vehicle.auctionGrade || vehicle.grade) ? `- ${vehicle.auctionGrade || vehicle.grade}` : ''} {vehicle.year}
+          </h1>
+          <div style={{ fontSize: '0.95rem', color: '#666', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
+            {vehicle.tagline ? vehicle.tagline : `POSTED BY: ${new Date(vehicle.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase()}`}
           </div>
+        </div>
 
-          {/* Header */}
-          <div className="flex-between" style={{ marginBottom: 28, flexWrap: 'wrap', gap: 16 }}>
-            <div>
-              <h1 style={{ fontSize: '2rem', fontWeight: 800, margin: 0 }}>
-                {vehicle.brand} {vehicle.model}
-              </h1>
-              {vehicle.tagline && (
-                <p style={{ margin: '8px 0 0 0', fontSize: '0.95rem', fontWeight: 600, color: 'var(--brand-red)', letterSpacing: '0.5px' }}>
-                  {vehicle.tagline}
-                </p>
-              )}
-              <div className="flex" style={{ gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
-                <span className="badge">{vehicle.year}</span>
-                <span className="badge">{vehicle.fuelType}</span>
-                <span className="badge">{vehicle.transmission}</span>
-                <span className="badge">{vehicle.registeredStatus}</span>
-                <span className="badge">📍 {vehicle.location}</span>
-              </div>
-            </div>
-            <div className="flex" style={{ gap: 10 }}>
-              <a href={`https://wa.me/94714495632?text=${whatsappMsg}`} target="_blank" rel="noreferrer" className="button danger">
-                💬 WhatsApp
-              </a>
-              <a href="tel:+94714495632" className="button outline">📞 Call</a>
-            </div>
+        {/* Main Gallery */}
+        <div style={{ backgroundColor: '#fff', borderRadius: '16px', overflow: 'hidden', marginBottom: '16px', position: 'relative', border: '1px solid #eaeaea' }}>
+          <img
+            src={selectedImage || 'https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80'}
+            alt={`${vehicle.brand} ${vehicle.model}`}
+            style={{ width: '100%', height: '560px', objectFit: 'contain', backgroundColor: '#f5f5f5' }}
+          />
+          {/* Status Badge Overlays */}
+          <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', gap: '10px' }}>
+             <span style={{ backgroundColor: 'var(--brand-red)', color: '#fff', padding: '8px 16px', borderRadius: '6px', fontWeight: 800, fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(229,0,0,0.4)' }}>
+               {vehicle.isSold ? 'SOLD OUT' : 'AVAILABLE NOW'}
+             </span>
           </div>
+        </div>
 
-          {/* Main Content */}
-          <div className="grid grid-2" style={{ gap: 32 }}>
-            {/* Gallery */}
-            <div>
-              <div className="image-gallery">
-                <div className="image-gallery-main">
-                  <img
-                    src={selectedImage || 'https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=800&q=80'}
-                    alt={`${vehicle.brand} ${vehicle.model}`}
-                    style={{ width: '100%', height: 420, objectFit: 'cover' }}
-                  />
-                </div>
-                {vehicle.imageUrls.length > 1 && (
-                  <div className="image-thumbs">
-                    {vehicle.imageUrls.map((url) => (
-                      <button
-                        key={url}
-                        type="button"
-                        onClick={() => setSelectedImage(url)}
-                        className={selectedImage === url ? 'active' : ''}
-                      >
-                        <img src={url} alt="Thumbnail" />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+        {/* Thumbnails */}
+        {vehicle.imageUrls.length > 1 && (
+          <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '16px' }} className="hide-scrollbar">
+            <style>{`
+              .hide-scrollbar::-webkit-scrollbar { display: none; }
+            `}</style>
+            {vehicle.imageUrls.map((url) => (
+              <button
+                key={url}
+                type="button"
+                onClick={() => setSelectedImage(url)}
+                style={{
+                  width: '140px',
+                  height: '90px',
+                  flexShrink: 0,
+                  borderRadius: '10px',
+                  overflow: 'hidden',
+                  border: selectedImage === url ? '3px solid #e50000' : '2px solid transparent',
+                  cursor: 'pointer',
+                  padding: 0,
+                  backgroundColor: '#fff',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <img src={url} alt="Thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: selectedImage === url ? 1 : 0.6, transition: 'opacity 0.2s' }} />
+              </button>
+            ))}
+          </div>
+        )}
 
-              {/* Share */}
-              <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span className="text-muted" style={{ fontSize: '0.85rem' }}>Share:</span>
-                <div className="share-buttons">
-                  <a href={`https://wa.me/?text=${whatsappMsg}`} target="_blank" rel="noreferrer" className="share-btn">💬</a>
-                  <button className="share-btn" onClick={handleShare} title="Copy link">
-                    {copied ? '✅' : '🔗'}
-                  </button>
-                </div>
-              </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '64px', marginTop: '64px' }}>
+          
+          {/* Left Column (Description & Specs) */}
+          <div>
+            {/* Description */}
+            <div style={{ marginBottom: '64px' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
+                Description
+              </h2>
+              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#444' }}>
+                {vehicle.description || `The ${vehicle.brand} ${vehicle.model} is a practical and highly efficient vehicle, well known for its excellent design and superior interior space. Despite its compact exterior size, it offers a roomy cabin with good headroom, comfortable seating, and flexible cargo space, making it ideal for city driving and daily use. It is easy to maneuver, economical to run, and highly reliable, which makes it a popular choice for families, first-time car owners, and urban commuters.`}
+              </p>
             </div>
 
-            {/* Details Panel */}
-            <div className="card panel" style={{ border: 'none', boxShadow: 'var(--shadow-xl)', padding: '32px' }}>
-
-              {/* Main Description */}
-              {vehicle.description && (
-                <div style={{ marginBottom: 32 }}>
-                  <p style={{ lineHeight: 1.8, fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                    {vehicle.description}
-                  </p>
-                </div>
-              )}
-              {/* Price */}
-              <div style={{ marginBottom: 24 }}>
-                <p className="text-muted" style={{ margin: '0 0 8px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>Vehicle Price</p>
-                <strong style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--brand-red)', lineHeight: 1, display: 'block' }}>
-                  ₨ {vehicle.price.toLocaleString('en-LK')}
-                </strong>
-              </div>
-
-              <hr style={{ margin: '32px 0', border: 'none', borderTop: '1px solid var(--border-light)' }} />
-
-              {/* Premium Specs Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+            {/* Specifications */}
+            <div style={{ marginBottom: '64px' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '32px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
+                Specifications
+              </h2>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px 24px' }}>
                 {[
-                  { icon: '🛣️', label: 'Mileage', value: `${vehicle.mileage.toLocaleString('en-LK')} km` },
-                  { icon: '📍', label: 'Location', value: vehicle.location },
-                  { icon: '⭐', label: 'Auction Grade', value: vehicle.auctionGrade || 'N/A' },
-                  { icon: '💎', label: 'Condition', value: vehicle.condition || 'Used' },
-                  { icon: '⚙️', label: 'Transmission', value: vehicle.transmission },
-                  { icon: '⛽', label: 'Fuel Type', value: vehicle.fuelType },
-                  { icon: '🚗', label: 'Body Type', value: vehicle.bodyType || 'N/A' },
-                  { icon: '📄', label: 'Registration', value: vehicle.registeredStatus },
-                ].map((s) => (
-                  <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px', backgroundColor: 'var(--surface-alt)', borderRadius: '12px', transition: 'transform 0.2s ease', cursor: 'default' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', boxShadow: 'var(--shadow-sm)' }}>
-                      {s.icon}
+                  { icon: '🚗', label: 'Brand', value: vehicle.brand },
+                  { icon: '🚙', label: 'Model', value: vehicle.model },
+                  { icon: '⏱️', label: 'Grade', value: vehicle.auctionGrade || vehicle.grade || 'N/A' },
+                  { icon: '🕹️', label: 'Transmission', value: vehicle.transmission },
+                  { icon: '📅', label: 'Year', value: vehicle.year },
+                  { icon: '⛽', label: 'Fuel', value: vehicle.fuelType },
+                  { icon: '⚙️', label: 'Engine Capacity', value: vehicle.cc ? `${vehicle.cc} CC` : 'N/A' },
+                  { icon: '🚘', label: 'Body Type', value: vehicle.bodyType || 'CAR' },
+                  { icon: '🛣️', label: 'Mileage', value: `${vehicle.mileage.toLocaleString()} KM` },
+                  { icon: '📋', label: 'Condition', value: vehicle.registeredStatus },
+                  { icon: '📍', label: 'Location', value: vehicle.location }
+                ].map((s, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px', borderBottom: '1px solid #eaeaea', paddingBottom: '20px' }}>
+                    <div style={{ fontSize: '2.2rem', filter: 'sepia(1) hue-rotate(-50deg) saturate(3)', opacity: 0.9 }}>
+                       {s.icon}
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-hint)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{s.label}</div>
-                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{s.value}</div>
+                      <div style={{ fontSize: '0.85rem', color: '#666', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '4px' }}>{s.label}</div>
+                      <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#111', textTransform: 'uppercase' }}>{s.value}</div>
                     </div>
                   </div>
                 ))}
               </div>
+            </div>
 
-              {/* Engine & Color */}
-              <div style={{ display: 'flex', gap: '24px', marginTop: '24px', padding: '20px', backgroundColor: '#fcfcfc', border: '1px solid var(--border-light)', borderRadius: '12px' }}>
-                {vehicle.cc && <div style={{ flex: 1 }}><div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Engine</div> <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>{vehicle.cc} cc</strong></div>}
-                {vehicle.color && <div style={{ flex: 1 }}><div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Color</div> <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>{vehicle.color}</strong></div>}
+            {/* Features (if any) */}
+            {vehicle.features && vehicle.features.length > 0 && (
+              <div style={{ marginBottom: '48px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
+                  Features
+                </h2>
+                <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', listStyle: 'none', padding: 0 }}>
+                  {vehicle.features.map((f, i) => (
+                     <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#444', fontSize: '1.05rem' }}>
+                       <span style={{ color: '#e50000', fontSize: '1.4rem' }}>✓</span> {f}
+                     </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column (Sticky Actions Panel) */}
+          <div>
+            <div style={{ position: 'sticky', top: '100px', backgroundColor: '#fff', padding: '40px 32px', borderRadius: '16px', border: '1px solid #eaeaea', boxShadow: '0 12px 32px rgba(0,0,0,0.08)' }}>
+              <div style={{ fontSize: '0.9rem', color: '#666', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: 700, marginBottom: '12px' }}>Vehicle Price</div>
+              <div style={{ fontSize: '3.2rem', fontWeight: 900, color: '#e50000', lineHeight: 1, marginBottom: '40px' }}>
+                 Rs {vehicle.price.toLocaleString('en-LK')}
               </div>
 
-              {/* Premium Features List */}
-              {vehicle.features && vehicle.features.length > 0 && (
-                <div style={{ marginTop: '32px' }}>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    🌟 Premium Features & Equipment
-                  </h3>
-                  <ul style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '14px', padding: 0 }}>
-                    {vehicle.features.map((f) => (
-                      <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '0.95rem', lineHeight: 1.5, color: 'var(--text-secondary)' }}>
-                        <span style={{ marginTop: '2px', fontSize: '1.1rem' }}>✨</span>
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Why Choose Us */}
-              {vehicle.whyChooseUs && vehicle.whyChooseUs.length > 0 && (
-                <div style={{ marginTop: '32px', backgroundColor: 'var(--surface-alt)', padding: '24px', borderRadius: '12px' }}>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    💯 Why Choose This {vehicle.brand} {vehicle.model}?
-                  </h3>
-                  <ul style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '14px', padding: 0 }}>
-                    {vehicle.whyChooseUs.map((w) => (
-                      <li key={w} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '0.95rem', lineHeight: 1.5, color: 'var(--text-primary)', fontWeight: 600 }}>
-                        <span style={{ marginTop: '2px', fontSize: '1.1rem' }}>✔️</span>
-                        <span>{w}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Verification */}
-              <div className="banner" style={{ marginTop: 20 }}>
-                <h4 style={{ margin: '0 0 6px', fontSize: '0.95rem' }}>✅ Verified Documentation</h4>
-                <p className="text-muted" style={{ fontSize: '0.82rem' }}>
-                  All documentation, customs clearance papers, and vehicle registration are verified and clear.
-                </p>
-              </div>
-
-              {/* Lease Calculator */}
-              <LeaseCalculator
-                price={vehicle.price}
-                downPayment={downPayment}
-                years={tenorYears}
-                onDownPaymentChange={setDownPayment}
-                onYearsChange={setTenorYears}
-              />
-
-              <div style={{ marginTop: 20 }}>
-                <a
-                  href={`https://wa.me/94714495632?text=${whatsappMsg}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="button danger full-width lg"
-                >
-                  💬 Inquire on WhatsApp
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
+                <a href={`https://wa.me/94714495632?text=${whatsappMsg}`} target="_blank" rel="noreferrer" style={{ width: '100%', backgroundColor: '#25D366', color: '#fff', padding: '18px', borderRadius: '12px', textAlign: 'center', fontWeight: 800, textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', fontSize: '1.15rem', transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                   💬 WhatsApp Inquiry
+                </a>
+                <a href="tel:+94714495632" style={{ width: '100%', backgroundColor: '#f9f9f9', color: '#111', border: '1px solid #ddd', padding: '18px', borderRadius: '12px', textAlign: 'center', fontWeight: 800, textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', fontSize: '1.15rem', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f1f1'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f9f9f9'}>
+                   📞 Call Seller
                 </a>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Contact Form Section */}
-        <section className="section" style={{ paddingTop: 0 }}>
-          <div className="grid grid-2" style={{ gap: 32 }}>
-            {/* Specs Card */}
-            <div className="card panel">
-              <h3 style={{ marginBottom: 20 }}>Full Specifications</h3>
-              <div className="grid grid-2" style={{ gap: 16 }}>
-                {[
-                  { label: 'Brand', value: vehicle.brand },
-                  { label: 'Model', value: vehicle.model },
-                  { label: 'Year', value: vehicle.year },
-                  { label: 'Fuel Type', value: vehicle.fuelType },
-                  { label: 'Transmission', value: vehicle.transmission },
-                  { label: 'Body Type', value: vehicle.bodyType || 'N/A' },
-                  { label: 'Mileage', value: `${vehicle.mileage.toLocaleString('en-LK')} km` },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <p className="text-muted" style={{ fontSize: '0.78rem', margin: 0 }}>{s.label}</p>
-                    <p style={{ fontWeight: 600, margin: '2px 0 0' }}>{s.value}</p>
-                  </div>
-                ))}
-              </div>
-              {/* Description already moved to top, keeping this section for fallback or extra details if needed, but it's redundant now so we'll remove it. */}
-            </div>
+              <hr style={{ borderColor: '#eaeaea', margin: '40px 0', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
 
-            {/* Inquiry Form */}
-            <div className="card panel">
-              <h3 style={{ marginBottom: 6 }}>Contact the Owner</h3>
-              <p className="text-muted" style={{ marginBottom: 20 }}>Submit your inquiry and our team will respond immediately.</p>
+              <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: '#111', fontWeight: 800 }}>Quick Inquiry</h3>
+              <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '24px' }}>Fill details and we will get back to you immediately.</p>
+              
               <form onSubmit={handleSubmit}>
-                <div className="field" style={{ marginTop: 0 }}>
-                  <label>Your Name</label>
-                  <input value={buyerName} onChange={(e) => setBuyerName(e.target.value)} required placeholder="Enter your full name" />
+                <div style={{ marginBottom: '16px' }}>
+                  <input value={buyerName} onChange={(e) => setBuyerName(e.target.value)} required placeholder="Your Name" style={{ width: '100%', padding: '16px', borderRadius: '8px', border: '1px solid #ddd', backgroundColor: '#fafafa', color: '#111', fontSize: '1rem' }} />
                 </div>
-                <div className="field">
-                  <label>Phone Number</label>
-                  <input value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} required placeholder="07X XXX XXXX" />
+                <div style={{ marginBottom: '16px' }}>
+                  <input value={buyerPhone} onChange={(e) => setBuyerPhone(e.target.value)} required placeholder="Phone Number" style={{ width: '100%', padding: '16px', borderRadius: '8px', border: '1px solid #ddd', backgroundColor: '#fafafa', color: '#111', fontSize: '1rem' }} />
                 </div>
-                <div className="field">
-                  <label>Inquiry Type</label>
-                  <select value={inquiryType} onChange={(e) => setInquiryType(e.target.value)}>
-                    <option value="WhatsApp">WhatsApp Inquiry</option>
-                    <option value="Lease">Lease Quote</option>
-                    <option value="Visit">Schedule Visit</option>
-                  </select>
+                <div style={{ marginBottom: '16px' }}>
+                  <textarea value={message} onChange={(e) => setMessage(e.target.value)} required placeholder="I'm interested in this vehicle..." style={{ width: '100%', padding: '16px', borderRadius: '8px', border: '1px solid #ddd', backgroundColor: '#fafafa', color: '#111', minHeight: '120px', fontSize: '1rem', fontFamily: 'inherit' }} />
                 </div>
-                <div className="field">
-                  <label>Message</label>
-                  <textarea value={message} onChange={(e) => setMessage(e.target.value)} required placeholder="Tell us what you need..." />
-                </div>
-                <button type="submit" className="button danger full-width" style={{ marginTop: 16 }}>
-                  Send Inquiry
+                <button type="submit" style={{ width: '100%', padding: '18px', backgroundColor: '#e50000', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 800, fontSize: '1.1rem', cursor: 'pointer', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#cc0000'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#e50000'}>
+                  Submit Details
                 </button>
               </form>
-              {status && <p className="status-message">{status}</p>}
+              {status && <p style={{ marginTop: '20px', color: status.includes('✅') ? '#4ade80' : '#f87171', textAlign: 'center', fontWeight: 600 }}>{status}</p>}
+
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </main>
   );

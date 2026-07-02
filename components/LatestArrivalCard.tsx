@@ -26,7 +26,7 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           e.currentTarget.style.boxShadow = 'none';
         }}
       >
-        <div style={{ position: 'relative', height: '240px', backgroundColor: '#f5f5f5' }}>
+        <div style={{ position: 'relative', height: '240px', backgroundColor: '#f5f5f5', overflow: 'hidden' }}>
           <div style={{
             position: 'absolute',
             top: '16px',
@@ -45,6 +45,39 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
             alt={vehicle.model}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
+          {vehicle.isSold && (
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 3,
+              pointerEvents: 'none'
+            }}>
+              <svg width="160" height="160" viewBox="0 0 200 200" style={{ filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.3))' }}>
+                <defs>
+                  <path id="curveTop" d="M 35,100 A 65,65 0 0,1 165,100" />
+                  <path id="curveBot" d="M 165,100 A 65,65 0 0,1 35,100" />
+                </defs>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#e50000" strokeWidth="8" strokeDasharray="10 8" />
+                <circle cx="100" cy="100" r="75" fill="none" stroke="#e50000" strokeWidth="3" />
+                
+                <text fill="#e50000" fontWeight="bold" fontSize="18" letterSpacing="4">
+                  <textPath href="#curveTop" startOffset="50%" textAnchor="middle">SOLD OUT</textPath>
+                </text>
+                <text fill="#e50000" fontWeight="bold" fontSize="18" letterSpacing="4">
+                  <textPath href="#curveBot" startOffset="50%" textAnchor="middle">SOLD OUT</textPath>
+                </text>
+                
+                <rect x="10" y="75" width="180" height="50" fill="rgba(255,255,255,0.95)" stroke="#e50000" strokeWidth="4" />
+                <text x="100" y="111" fill="#e50000" fontWeight="900" fontSize="32" fontFamily="Arial, sans-serif" textAnchor="middle">
+                  SOLD OUT
+                </text>
+              </svg>
+            </div>
+          )}
         </div>
 
         <div style={{ padding: '24px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>

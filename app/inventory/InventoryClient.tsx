@@ -33,7 +33,6 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
   const [mileageMax, setMileageMax] = useState(500000);
   const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [page, setPage] = useState(1);
 
 
 
@@ -46,8 +45,7 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
       (!fuelType || v.fuelType === fuelType) &&
       (!bodyType || v.bodyType === bodyType) &&
       (!transmission || v.transmission === transmission) &&
-      (!brandFilter || v.brand === brandFilter) &&
-      !v.isSold
+      (!brandFilter || v.brand === brandFilter)
     );
 
     switch (sortBy) {
@@ -60,9 +58,6 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
     return result;
   }, [vehicles, priceMax, yearMin, fuelType, bodyType, transmission, brandFilter, mileageMax, sortBy]);
 
-  const totalPages = Math.ceil(filteredVehicles.length / PAGE_SIZE);
-  const paginatedVehicles = filteredVehicles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
   const activeFilters = [
     brandFilter && `Brand: ${brandFilter}`,
     fuelType && `Fuel: ${fuelType}`,
@@ -73,7 +68,6 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
   function clearFilters() {
     setBrandFilter(''); setFuelType(''); setBodyType(''); setTransmission('');
     setPriceMax(80000000); setYearMin(1990); setMileageMax(500000);
-    setPage(1);
   }
 
   return (
@@ -115,7 +109,7 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
 
               <div className="field">
                 <label>Brand</label>
-                <select value={brandFilter} onChange={(e) => { setBrandFilter(e.target.value); setPage(1); }}>
+                <select value={brandFilter} onChange={(e) => { setBrandFilter(e.target.value); }}>
                   <option value="">All Brands</option>
                   {brands.map((b) => <option key={b} value={b}>{b}</option>)}
                 </select>
@@ -131,19 +125,18 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
                   value={priceOptions.indexOf(priceMax) !== -1 ? priceOptions.indexOf(priceMax) : priceOptions.length - 1} 
                   onChange={(e) => { 
                     setPriceMax(priceOptions[Number(e.target.value)]); 
-                    setPage(1); 
                   }} 
                 />
               </div>
 
               <div className="field">
                 <label>Min Year: {yearMin}</label>
-                <input type="range" min={1990} max={2026} value={yearMin} onChange={(e) => { setYearMin(Number(e.target.value)); setPage(1); }} />
+                <input type="range" min={1990} max={2026} value={yearMin} onChange={(e) => { setYearMin(Number(e.target.value)); }} />
               </div>
 
               <div className="field">
                 <label>Fuel Type</label>
-                <select value={fuelType} onChange={(e) => { setFuelType(e.target.value); setPage(1); }}>
+                <select value={fuelType} onChange={(e) => { setFuelType(e.target.value); }}>
                   <option value="">Any Fuel</option>
                   {fuelTypes.map((f) => <option key={f} value={f}>{f}</option>)}
                 </select>
@@ -151,7 +144,7 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
 
               <div className="field">
                 <label>Body Type</label>
-                <select value={bodyType} onChange={(e) => { setBodyType(e.target.value); setPage(1); }}>
+                <select value={bodyType} onChange={(e) => { setBodyType(e.target.value); }}>
                   <option value="">Any Type</option>
                   {bodyTypes.map((b) => <option key={b} value={b}>{b}</option>)}
                 </select>
@@ -159,7 +152,7 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
 
               <div className="field">
                 <label>Transmission</label>
-                <select value={transmission} onChange={(e) => { setTransmission(e.target.value); setPage(1); }}>
+                <select value={transmission} onChange={(e) => { setTransmission(e.target.value); }}>
                   <option value="">Any</option>
                   {transmissions.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
@@ -167,7 +160,7 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
 
               <div className="field">
                 <label>Max Mileage: {mileageMax.toLocaleString('en-LK')} km</label>
-                <input type="range" min={10000} max={500000} step={5000} value={mileageMax} onChange={(e) => { setMileageMax(Number(e.target.value)); setPage(1); }} />
+                <input type="range" min={10000} max={500000} step={5000} value={mileageMax} onChange={(e) => { setMileageMax(Number(e.target.value)); }} />
               </div>
 
               <button className="button secondary full-width" style={{ marginTop: 16 }} onClick={clearFilters}>
@@ -177,9 +170,9 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
 
             {/* Vehicle Grid */}
             <div>
-              {paginatedVehicles.length > 0 ? (
+              {filteredVehicles.length > 0 ? (
                 <div className={viewMode === 'grid' ? 'grid grid-3' : 'grid'} style={viewMode === 'list' ? { gridTemplateColumns: '1fr' } : {}}>
-                  {paginatedVehicles.map((vehicle, i) => (
+                  {filteredVehicles.map((vehicle, i) => (
                     <div key={vehicle.id} className={`animate-fade-in-up stagger-${(i % 6) + 1}`}>
                       <LatestArrivalCard vehicle={vehicle} />
                     </div>
@@ -196,18 +189,6 @@ export default function InventoryClient({ initialVehicles }: { initialVehicles: 
                 </div>
               )}
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="pagination">
-                  <button disabled={page <= 1} onClick={() => setPage(page - 1)}>‹</button>
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <button key={i + 1} className={page === i + 1 ? 'active' : ''} onClick={() => setPage(i + 1)}>
-                      {i + 1}
-                    </button>
-                  ))}
-                  <button disabled={page >= totalPages} onClick={() => setPage(page + 1)}>›</button>
-                </div>
-              )}
             </div>
           </div>
         </section>
