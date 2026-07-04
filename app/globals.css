@@ -2650,6 +2650,23 @@ hr {
 }
 
 @media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stats-card {
+    padding: 16px 12px;
+  }
+
+  .stats-card .stat-number {
+    font-size: 1.7rem;
+  }
+
+  .stats-card h3 {
+    font-size: 0.75rem;
+  }
+
   .search-fields {
     grid-template-columns: 1fr;
   }
