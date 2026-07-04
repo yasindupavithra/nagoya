@@ -69,7 +69,7 @@ export default function ContactPage() {
             
             <div id="map" style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #eaeaea' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '16px', color: '#111' }}>Our Location</h3>
-              <div style={{
+              <a href="https://www.google.com/maps/search/?api=1&query=Nagoya+Auto+Auction,+Munagama,+Horana" target="_blank" rel="noreferrer" style={{
                 height: '350px',
                 borderRadius: '16px',
                 background: 'url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80") center/cover no-repeat',
@@ -77,7 +77,8 @@ export default function ContactPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                textDecoration: 'none'
               }}>
                 <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)' }}></div>
                 <div style={{ position: 'relative', zIndex: 1, backgroundColor: '#fff', padding: '16px 24px', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.15)', textAlign: 'center' }}>
@@ -85,7 +86,7 @@ export default function ContactPage() {
                   <h4 style={{ margin: '0 0 4px', fontWeight: 800, color: '#111' }}>Nagoya Auto Auction</h4>
                   <p style={{ margin: 0, color: '#666', fontSize: '0.9rem' }}>Munagama, Horana</p>
                 </div>
-              </div>
+              </a>
             </div>
 
             <div style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '32px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #eaeaea' }}>
