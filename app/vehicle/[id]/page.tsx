@@ -83,10 +83,10 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
         {/* Header */}
         <div style={{ marginBottom: '24px' }}>
           <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '0 0 12px 0', textTransform: 'uppercase', letterSpacing: '-0.5px', color: '#111' }}>
-            {vehicle.model} {(vehicle.auctionGrade || vehicle.grade) ? `- ${vehicle.auctionGrade || vehicle.grade}` : ''} {vehicle.year}
+            {vehicle.model} {vehicle.auctionGrade ? `- ${vehicle.auctionGrade}` : ''} {vehicle.year}
           </h1>
           <div style={{ fontSize: '0.95rem', color: '#666', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
-            {vehicle.tagline ? vehicle.tagline : `POSTED BY: ${new Date(vehicle.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase()}`}
+            {vehicle.tagline ? vehicle.tagline : `POSTED BY: ${new Date(vehicle.createdAt ? vehicle.createdAt.seconds * 1000 : Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase()}`}
           </div>
         </div>
 
@@ -159,7 +159,7 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
                 {[
                   { icon: '🚗', label: 'Brand', value: vehicle.brand },
                   { icon: '🚙', label: 'Model', value: vehicle.model },
-                  { icon: '⏱️', label: 'Grade', value: vehicle.auctionGrade || vehicle.grade || 'N/A' },
+                  { icon: '⏱️', label: 'Grade', value: vehicle.auctionGrade || 'N/A' },
                   { icon: '🕹️', label: 'Transmission', value: vehicle.transmission },
                   { icon: '📅', label: 'Year', value: vehicle.year },
                   { icon: '⛽', label: 'Fuel', value: vehicle.fuelType },
