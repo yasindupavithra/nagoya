@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://nagoya-phi.vercel.app/sitemap.xml',
+    sitemap: 'https://nagoyaglobal.lk/sitemap.xml',
   };
 }

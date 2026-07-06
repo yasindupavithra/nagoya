@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nagoya-phi.vercel.app'),
+  metadataBase: new URL('https://nagoyaglobal.lk'),
   title: {
     template: '%s | Nagoya Auto Auction',
     default: 'Nagoya Auto Auction — Sri Lanka\'s Largest Auto Auction',

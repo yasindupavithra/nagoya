@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { fetchActiveVehicles } from '../lib/firestore';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://nagoya-phi.vercel.app';
+  const baseUrl = 'https://nagoyaglobal.lk';
   
   // Static routes
   const routes = ['', '/inventory', '/about', '/contact', '/leasing'].map((route) => ({
