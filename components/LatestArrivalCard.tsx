@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Vehicle } from '../lib/types';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
   return (
@@ -40,10 +41,12 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           }}>
             {vehicle.year}
           </div>
-          <img
+          <Image
             src={vehicle.imageUrls?.[0] || 'https://via.placeholder.com/400x250?text=No+Image'}
             alt={vehicle.model}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            style={{ objectFit: 'cover' }}
           />
           {vehicle.isSold && (
             <div style={{
