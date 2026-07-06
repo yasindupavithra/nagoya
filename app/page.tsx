@@ -349,6 +349,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══════ HAPPY CUSTOMERS SLIDER ══════ */}
+      <section className="section bg-light" style={{ overflow: 'hidden' }}>
+        <div className="container" style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <span className="tag">Nagoya Family</span>
+          <h2>Happy Customers</h2>
+        </div>
+        <div className="customer-slider-container">
+          <div className="customer-slider-track">
+            {/* First Set of Images */}
+            {[1, 2, 3, 4].map((num) => (
+              <div key={`customer-a-${num}`} className="customer-slide">
+                <div className="customer-image-wrapper">
+                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
+                </div>
+              </div>
+            ))}
+            {/* Second Set of Images for Infinite Loop */}
+            {[1, 2, 3, 4].map((num) => (
+              <div key={`customer-b-${num}`} className="customer-slide">
+                <div className="customer-image-wrapper">
+                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══════ STATS ══════ */}
       <section className="stats-section">
         <div className="container">
@@ -411,33 +439,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══════ HAPPY CUSTOMERS SLIDER ══════ */}
-      <section className="section bg-light" style={{ overflow: 'hidden' }}>
-        <div className="container" style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <span className="tag">Nagoya Family</span>
-          <h2>Happy Customers</h2>
-        </div>
-        <div className="customer-slider-container">
-          <div className="customer-slider-track">
-            {/* First Set of Images */}
-            {[1, 2, 3, 4].map((num) => (
-              <div key={`customer-a-${num}`} className="customer-slide">
-                <div className="customer-image-wrapper">
-                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
-                </div>
-              </div>
-            ))}
-            {/* Second Set of Images for Infinite Loop */}
-            {[1, 2, 3, 4].map((num) => (
-              <div key={`customer-b-${num}`} className="customer-slide">
-                <div className="customer-image-wrapper">
-                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ══════ TESTIMONIALS ══════ */}
       <section className="section">
