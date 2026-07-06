@@ -161,6 +161,12 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
                     අතින් ලක්ෂ <span style={{ color: '#d4af37' }}>{vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක්</span> <br/> 
                     දීලා අරගෙන යන්න!
                   </h3>
+                  {vehicle.monthlyPayment && (
+                    <div style={{ marginBottom: '16px', fontSize: '1.2rem', color: '#fff', fontWeight: 600, lineHeight: 1.5 }}>
+                      මාසික වාරිකය රු. <span style={{ color: '#d4af37', fontSize: '1.4rem', fontWeight: 800 }}>{vehicle.monthlyPayment.toLocaleString('en-LK')}</span> පමණයි.<br/>
+                      <span style={{ fontSize: '1rem', color: '#aaa', fontWeight: 500 }}>(කාලය අවුරුදු 5ක් සඳහා)</span>
+                    </div>
+                  )}
                   <p style={{ fontSize: '1.1rem', margin: 0, color: '#999', fontWeight: 400, lineHeight: 1.6 }}>
                     Experience luxury effortlessly. Pay the minimum initial amount today and drive away with your dream vehicle. Easy financing available!
                   </p>
