@@ -16,13 +16,13 @@ export const metadata: Metadata = {
     default: 'Nagoya Auto Auction — Sri Lanka\'s Largest Auto Auction',
   },
   description: 'Find certified Japanese cars with transparent pricing. Browse inventory, calculate leases, and get verified inspection reports.',
-  keywords: ['auto auction sri lanka', 'japanese cars sri lanka', 'buy vehicles colombo', 'nagoya auto'],
+  keywords: ['auto auction sri lanka', 'japanese cars sri lanka', 'buy vehicles colombo', 'nagoya auto', 'nagoya global'],
   authors: [{ name: 'Nagoya Auto' }],
   openGraph: {
     title: 'Nagoya Auto Auction — Sri Lanka\'s Largest Auto Auction',
     description: 'Find certified Japanese cars with transparent pricing. Browse inventory, calculate leases, and get verified inspection reports.',
-    url: 'https://nagoya-phi.vercel.app',
-    siteName: 'Nagoya Auto Auction',
+    url: 'https://www.nagoyaglobal.lk',
+    siteName: 'Nagoya Global',
     images: [
       {
         url: '/Gemini_Generated_Image_ewmootewmootewmo.png',
