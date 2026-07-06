@@ -26,7 +26,7 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
           e.currentTarget.style.boxShadow = 'none';
         }}
       >
-        <div style={{ position: 'relative', height: 'clamp(140px, 35vw, 240px)', backgroundColor: '#f5f5f5', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', aspectRatio: '4/3', backgroundColor: '#f5f5f5', overflow: 'hidden' }}>
           <div style={{
             position: 'absolute',
             top: '16px',
