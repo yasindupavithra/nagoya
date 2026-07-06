@@ -24,6 +24,7 @@ export type Vehicle = {
   startingBid?: number;
   currentBid?: number;
   tagline?: string;
+  initialPayment?: number;
   auctionGrade?: string;
   condition?: string;
   whyChooseUs?: string[];

@@ -2685,3 +2685,24 @@ hr {
     text-align: center;
   }
 }
+
+/* Added for Mobile Responsiveness */
+.vehicle-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 64px;
+  margin-top: 64px;
+}
+
+@media (max-width: 960px) {
+  .vehicle-details-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 500px) {
+  .grid-4, .grid-3, .grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+}

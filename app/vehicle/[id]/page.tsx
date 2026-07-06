@@ -135,10 +135,74 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
           </div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '64px', marginTop: '64px' }}>
+        <div className="vehicle-details-grid">
           
           {/* Left Column (Description & Specs) */}
           <div>
+            {/* Initial Payment Prominent Banner */}
+            {vehicle.initialPayment && (
+              <div style={{
+                background: 'linear-gradient(145deg, #111111 0%, #1a1a1a 100%)',
+                color: '#fff',
+                borderRadius: '16px',
+                padding: '24px 32px',
+                marginBottom: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px rgba(212,175,55,0.2)',
+                position: 'relative',
+                overflow: 'hidden',
+                flexWrap: 'wrap',
+                gap: '20px'
+              }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }}></div>
+                <div style={{ position: 'absolute', bottom: '-20%', right: '-5%', opacity: 0.03, fontSize: '16rem', pointerEvents: 'none', userSelect: 'none' }}>
+                  🚘
+                </div>
+                <div style={{ position: 'relative', zIndex: 1, flex: '1 1 300px' }}>
+                  <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '3px', fontWeight: 800, color: '#d4af37', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ display: 'inline-block', width: '6px', height: '6px', backgroundColor: '#d4af37', borderRadius: '50%', boxShadow: '0 0 10px #d4af37' }}></span>
+                    Premium Financing
+                  </div>
+                  <h3 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', fontWeight: 900, margin: '0 0 12px 0', lineHeight: 1.3, letterSpacing: '-0.5px', color: '#fff' }}>
+                    අතින් ලක්ෂ <span style={{ color: '#d4af37' }}>{vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක්</span> <br/> 
+                    දීලා අරගෙන යන්න!
+                  </h3>
+                  <p style={{ fontSize: '1.1rem', margin: 0, color: '#999', fontWeight: 400, lineHeight: 1.6 }}>
+                    Experience luxury effortlessly. Pay the minimum initial amount today and drive away with your dream vehicle. Easy financing available!
+                  </p>
+                </div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <a href={`https://wa.me/94714495632?text=${whatsappMsg}`} target="_blank" rel="noreferrer" style={{ 
+                    display: 'inline-block',
+                    background: 'linear-gradient(90deg, #d4af37 0%, #aa8c2c 100%)', 
+                    color: '#000', 
+                    padding: '18px 40px', 
+                    borderRadius: '50px', 
+                    fontWeight: 800, 
+                    fontSize: '1.1rem', 
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    boxShadow: '0 10px 30px rgba(212,175,55,0.3)',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(212,175,55,0.5)';
+                    e.currentTarget.style.filter = 'brightness(1.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'none';
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(212,175,55,0.3)';
+                    e.currentTarget.style.filter = 'none';
+                  }}>
+                    Inquire Now
+                  </a>
+                </div>
+              </div>
+            )}
             {/* Description */}
             <div style={{ marginBottom: '64px' }}>
               <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
@@ -245,15 +309,77 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
                 </ul>
               </div>
             )}
+
+            {/* Why Choose Us (if any) */}
+            {vehicle.whyChooseUs && vehicle.whyChooseUs.length > 0 && (
+              <div style={{ marginBottom: '48px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
+                  Why Choose This Vehicle
+                </h2>
+                <ul style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+                  gap: '20px', 
+                  listStyle: 'none', 
+                  padding: 0 
+                }}>
+                  {vehicle.whyChooseUs
+                    .map((w, i) => (
+                      <li key={i} style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '12px', 
+                        backgroundColor: '#fff', 
+                        padding: '16px 20px', 
+                        borderRadius: '16px', 
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                        border: '1px solid #f0f0f0',
+                        color: '#333', 
+                        fontWeight: 600,
+                        fontSize: '0.95rem',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                        cursor: 'default'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(229,0,0,0.08)';
+                        e.currentTarget.style.borderColor = 'rgba(229,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'none';
+                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.04)';
+                        e.currentTarget.style.borderColor = '#f0f0f0';
+                      }}
+                      >
+                        <div style={{ 
+                          width: '28px', 
+                          height: '28px', 
+                          borderRadius: '50%', 
+                          backgroundColor: 'rgba(229,0,0,0.1)', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center',
+                          color: '#e50000',
+                          fontSize: '1rem',
+                          flexShrink: 0
+                        }}>⭐</div>
+                        <span style={{ lineHeight: 1.4 }}>{w}</span>
+                      </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Right Column (Sticky Actions Panel) */}
           <div>
             <div style={{ position: 'sticky', top: '100px', backgroundColor: '#fff', padding: '40px 32px', borderRadius: '16px', border: '1px solid #eaeaea', boxShadow: '0 12px 32px rgba(0,0,0,0.08)' }}>
               <div style={{ fontSize: '0.9rem', color: '#666', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: 700, marginBottom: '12px' }}>Vehicle Price</div>
-              <div style={{ fontSize: '3.2rem', fontWeight: 900, color: '#e50000', lineHeight: 1, marginBottom: '40px' }}>
+              <div style={{ fontSize: '3.2rem', fontWeight: 900, color: '#e50000', lineHeight: 1, marginBottom: vehicle.initialPayment ? '16px' : '40px' }}>
                  Rs {vehicle.price.toLocaleString('en-LK')}
               </div>
+
+
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
                 <a href={`https://wa.me/94714495632?text=${whatsappMsg}`} target="_blank" rel="noreferrer" style={{ width: '100%', backgroundColor: '#25D366', color: '#fff', padding: '18px', borderRadius: '12px', textAlign: 'center', fontWeight: 800, textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', fontSize: '1.15rem', transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>

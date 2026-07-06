@@ -2,12 +2,13 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../../../../lib/firebase';
+import { auth, storage } from '../../../../../lib/firebase';
 import { fetchVehicleById, updateVehicle } from '../../../../../lib/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import type { Vehicle } from '../../../../../lib/types';
 
-// Helper function to resize and convert image files to base64 to avoid Firebase Storage usage
-function resizeAndConvertToBase64(file: File, maxWidth = 800, maxHeight = 600, quality = 0.7): Promise<string> {
+// Helper function to resize and convert image files to Blob for Firebase Storage
+function resizeAndGetBlob(file: File, maxWidth = 800, maxHeight = 600, quality = 0.7): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -42,8 +43,10 @@ function resizeAndConvertToBase64(file: File, maxWidth = 800, maxHeight = 600, q
         }
 
         ctx.drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL('image/jpeg', quality);
-        resolve(dataUrl);
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error('Canvas to Blob failed'));
+        }, 'image/jpeg', quality);
       };
       img.onerror = (err) => reject(err);
     };
@@ -75,6 +78,7 @@ export default function EditVehiclePage() {
   const [model, setModel] = useState('');
   const [year, setYear] = useState(2020);
   const [price, setPrice] = useState(0);
+  const [initialPayment, setInitialPayment] = useState<number | ''>('');
   const [mileage, setMileage] = useState(0);
   const [cc, setCc] = useState('1500');
   const [location, setLocation] = useState('Malabe');
@@ -134,6 +138,7 @@ export default function EditVehiclePage() {
         setModel(data.model);
         setYear(data.year);
         setPrice(data.price);
+        setInitialPayment(data.initialPayment ?? '');
         setMileage(data.mileage);
         setCc(data.cc ?? '1500');
         setLocation(data.location);
@@ -247,14 +252,32 @@ export default function EditVehiclePage() {
     }
 
     setIsSubmitting(true);
-    setStatus('Converting and compressing new images to Base64...');
+    setStatus('Compressing and uploading new images to Cloudinary...');
 
     try {
       let finalImageUrls = [...existingImageUrls];
       
       if (selectedFiles.length > 0) {
-        const convertPromises = selectedFiles.map(file => resizeAndConvertToBase64(file));
-        const uploadedUrls = await Promise.all(convertPromises);
+        const uploadPromises = selectedFiles.map(async (file) => {
+          const blob = await resizeAndGetBlob(file);
+          
+          const formData = new FormData();
+          formData.append('file', blob);
+          formData.append('upload_preset', 'mco1ctsd');
+
+          const res = await fetch('https://api.cloudinary.com/v1_1/hubh1wiy/image/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!res.ok) {
+            throw new Error('Failed to upload image to Cloudinary');
+          }
+
+          const data = await res.json();
+          return data.secure_url;
+        });
+        const uploadedUrls = await Promise.all(uploadPromises);
         finalImageUrls = [...finalImageUrls, ...uploadedUrls];
       }
 
@@ -273,6 +296,7 @@ export default function EditVehiclePage() {
         model,
         year: Number(year),
         price: Number(price),
+        initialPayment: initialPayment === '' ? undefined : Number(initialPayment),
         mileage: Number(mileage),
         fuelType,
         transmission,
@@ -436,6 +460,21 @@ export default function EditVehiclePage() {
                         onChange={(e) => setPrice(Number(e.target.value))} 
                         required 
                       />
+                    </div>
+
+                    <div className="field" style={{ marginTop: 0 }}>
+                      <label>Initial Payment (in Lakhs) / අතින් දෙන ගාණ (ලක්ෂ වලින්)</label>
+                      <input 
+                        type="number" 
+                        value={initialPayment} 
+                        onChange={(e) => setInitialPayment(e.target.value === '' ? '' : Number(e.target.value))} 
+                        placeholder="e.g. 36 (for 3.6 Million)"
+                      />
+                      {initialPayment !== '' && Number(initialPayment) > 0 && (
+                        <div style={{ marginTop: '8px', padding: '8px 12px', backgroundColor: '#fff4f4', border: '1px solid #ffcccc', borderRadius: '6px', color: '#e50000', fontSize: '0.9rem', fontWeight: 700, display: 'inline-block' }}>
+                          💡 සයිට් එකේ පේන්නේ: අතින් ලක්ෂ {Number(initialPayment).toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක් දීලා අරගෙන යන්න!
+                        </div>
+                      )}
                     </div>
 
                     <div className="field" style={{ marginTop: 0 }}>
@@ -668,6 +707,46 @@ export default function EditVehiclePage() {
                             >
                               ✕
                             </button>
+                            <div style={{ position: 'absolute', bottom: 6, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 8 }}>
+                              <button
+                                type="button"
+                                disabled={index === 0}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  moveExistingImage(index, 'left');
+                                }}
+                                style={{
+                                  background: 'rgba(0,0,0,0.6)',
+                                  color: '#fff',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '2px 8px',
+                                  cursor: index === 0 ? 'not-allowed' : 'pointer',
+                                  opacity: index === 0 ? 0.3 : 1
+                                }}
+                              >
+                                ◀
+                              </button>
+                              <button
+                                type="button"
+                                disabled={index === existingImageUrls.length - 1}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  moveExistingImage(index, 'right');
+                                }}
+                                style={{
+                                  background: 'rgba(0,0,0,0.6)',
+                                  color: '#fff',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '2px 8px',
+                                  cursor: index === existingImageUrls.length - 1 ? 'not-allowed' : 'pointer',
+                                  opacity: index === existingImageUrls.length - 1 ? 0.3 : 1
+                                }}
+                              >
+                                ▶
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -744,10 +823,52 @@ export default function EditVehiclePage() {
                               >
                                 ✕
                               </button>
+                            <div style={{ position: 'absolute', bottom: 4, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 6 }}>
+                              <button
+                                type="button"
+                                disabled={index === 0}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  moveNewFile(index, 'left');
+                                }}
+                                style={{
+                                  background: 'rgba(0,0,0,0.6)',
+                                  color: '#fff',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '2px 6px',
+                                  cursor: index === 0 ? 'not-allowed' : 'pointer',
+                                  opacity: index === 0 ? 0.3 : 1,
+                                  fontSize: '0.62rem'
+                                }}
+                              >
+                                ◀
+                              </button>
+                              <button
+                                type="button"
+                                disabled={index === newPreviews.length - 1}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  moveNewFile(index, 'right');
+                                }}
+                                style={{
+                                  background: 'rgba(0,0,0,0.6)',
+                                  color: '#fff',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '2px 6px',
+                                  cursor: index === newPreviews.length - 1 ? 'not-allowed' : 'pointer',
+                                  opacity: index === newPreviews.length - 1 ? 0.3 : 1,
+                                  fontSize: '0.62rem'
+                                }}
+                              >
+                                ▶
+                              </button>
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
                       </div>
+                    </div>
                     )}
                   </div>
 

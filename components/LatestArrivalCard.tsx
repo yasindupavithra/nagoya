@@ -95,10 +95,26 @@ export default function LatestArrivalCard({ vehicle }: { vehicle: Vehicle }) {
             fontSize: 'clamp(0.9rem, 3vw, 1.25rem)',
             fontWeight: 900,
             color: '#ff2424',
-            marginBottom: '12px'
+            marginBottom: vehicle.initialPayment ? '4px' : '12px'
           }}>
             Rs {vehicle.price.toLocaleString('en-LK')}
           </div>
+          
+          {vehicle.initialPayment && (
+            <div style={{
+              fontSize: 'clamp(0.75rem, 2.5vw, 0.9rem)',
+              fontWeight: 800,
+              color: '#111',
+              backgroundColor: '#fff4f4',
+              border: '1px solid #ffcccc',
+              padding: '6px 10px',
+              borderRadius: '6px',
+              marginBottom: '12px',
+              display: 'inline-block'
+            }}>
+              🔥 අතින් ලක්ෂ {vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක්
+            </div>
+          )}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',

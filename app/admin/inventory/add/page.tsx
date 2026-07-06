@@ -1,12 +1,13 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../../../lib/firebase';
+import { auth, storage } from '../../../../lib/firebase';
 import { createVehicle } from '../../../../lib/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useRouter } from 'next/navigation';
 
-// Helper function to resize and convert image files to base64 to avoid Firebase Storage usage
-function resizeAndConvertToBase64(file: File, maxWidth = 800, maxHeight = 600, quality = 0.7): Promise<string> {
+// Helper function to resize and convert image files to Blob for Firebase Storage
+function resizeAndGetBlob(file: File, maxWidth = 800, maxHeight = 600, quality = 0.7): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -41,8 +42,10 @@ function resizeAndConvertToBase64(file: File, maxWidth = 800, maxHeight = 600, q
         }
 
         ctx.drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL('image/jpeg', quality);
-        resolve(dataUrl);
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error('Canvas to Blob failed'));
+        }, 'image/jpeg', quality);
       };
       img.onerror = (err) => reject(err);
     };
@@ -71,6 +74,7 @@ export default function AddVehiclePage() {
   const [model, setModel] = useState('');
   const [year, setYear] = useState(2020);
   const [price, setPrice] = useState('');
+  const [initialPayment, setInitialPayment] = useState('');
   const [mileage, setMileage] = useState('');
   const [cc, setCc] = useState('1500');
   const [location, setLocation] = useState('');
@@ -177,12 +181,31 @@ export default function AddVehiclePage() {
     }
 
     setIsSubmitting(true);
-    setStatus('Converting and compressing images to Base64 (this may take a few moments)...');
+    setStatus('Compressing and uploading images to Cloudinary (this may take a few moments)...');
 
     try {
-      // Convert and compress files to Base64
-      const convertPromises = selectedFiles.map(file => resizeAndConvertToBase64(file));
-      const imageUrls = await Promise.all(convertPromises);
+      // Convert, compress and upload files to Cloudinary
+      const uploadPromises = selectedFiles.map(async (file) => {
+        const blob = await resizeAndGetBlob(file);
+        
+        const formData = new FormData();
+        formData.append('file', blob);
+        formData.append('upload_preset', 'mco1ctsd'); // User's Cloudinary upload preset
+
+        const res = await fetch('https://api.cloudinary.com/v1_1/hubh1wiy/image/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to upload image to Cloudinary');
+        }
+
+        const data = await res.json();
+        return data.secure_url; // Returns the Cloudinary HTTPS URL
+      });
+      
+      const imageUrls = await Promise.all(uploadPromises);
       
       setStatus('Saving vehicle data to database...');
 
@@ -201,6 +224,7 @@ export default function AddVehiclePage() {
         model,
         year: Number(year),
         price: Number(price),
+        initialPayment: initialPayment ? Number(initialPayment) : undefined,
         mileage: Number(mileage),
         fuelType,
         transmission,
@@ -354,6 +378,25 @@ export default function AddVehiclePage() {
                         placeholder="e.g. 3,500,000"
                         required 
                       />
+                    </div>
+
+                    <div className="field" style={{ marginTop: 0 }}>
+                      <label>Initial Payment (in Lakhs) / අතින් දෙන ගාණ (ලක්ෂ වලින්)</label>
+                      <input 
+                        type="text"
+                        inputMode="numeric"
+                        value={initialPayment} 
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9.]/g, '');
+                          setInitialPayment(val);
+                        }} 
+                        placeholder="e.g. 36 (for 3.6 Million)"
+                      />
+                      {initialPayment !== '' && Number(initialPayment) > 0 && (
+                        <div style={{ marginTop: '8px', padding: '8px 12px', backgroundColor: '#fff4f4', border: '1px solid #ffcccc', borderRadius: '6px', color: '#e50000', fontSize: '0.9rem', fontWeight: 700, display: 'inline-block' }}>
+                          💡 සයිට් එකේ පේන්නේ: අතින් ලක්ෂ {Number(initialPayment).toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක් දීලා අරගෙන යන්න!
+                        </div>
+                      )}
                     </div>
 
                     <div className="field" style={{ marginTop: 0 }}>
