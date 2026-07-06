@@ -134,7 +134,7 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
             {/* Initial Payment Prominent Banner */}
             {vehicle.initialPayment && (
               <div style={{
-                background: 'linear-gradient(145deg, #111111 0%, #1a1a1a 100%)',
+                background: 'linear-gradient(145deg, #e50000 0%, #990000 100%)',
                 color: '#fff',
                 borderRadius: '16px',
                 padding: '24px 32px',
@@ -142,39 +142,39 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px rgba(212,175,55,0.2)',
+                boxShadow: '0 20px 40px rgba(229,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), 0 0 0 1px rgba(255,215,0,0.3)',
                 position: 'relative',
                 overflow: 'hidden',
                 flexWrap: 'wrap',
                 gap: '20px'
               }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }}></div>
-                <div style={{ position: 'absolute', bottom: '-20%', right: '-5%', opacity: 0.03, fontSize: '16rem', pointerEvents: 'none', userSelect: 'none' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, transparent, #ffd700, transparent)' }}></div>
+                <div style={{ position: 'absolute', bottom: '-20%', right: '-5%', opacity: 0.1, fontSize: '16rem', pointerEvents: 'none', userSelect: 'none' }}>
                   🚘
                 </div>
                 <div style={{ position: 'relative', zIndex: 1, flex: '1 1 300px' }}>
-                  <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '3px', fontWeight: 800, color: '#d4af37', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ display: 'inline-block', width: '6px', height: '6px', backgroundColor: '#d4af37', borderRadius: '50%', boxShadow: '0 0 10px #d4af37' }}></span>
+                  <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '3px', fontWeight: 800, color: '#ffd700', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ display: 'inline-block', width: '6px', height: '6px', backgroundColor: '#ffd700', borderRadius: '50%', boxShadow: '0 0 10px #ffd700' }}></span>
                     Premium Financing
                   </div>
                   <h3 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', fontWeight: 900, margin: '0 0 12px 0', lineHeight: 1.3, letterSpacing: '-0.5px', color: '#fff' }}>
-                    අතින් ලක්ෂ <span style={{ color: '#d4af37' }}>{vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක්</span> <br/> 
+                    අතින් ලක්ෂ <span style={{ color: '#ffd700' }}>{vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක්</span> <br/> 
                     දීලා අරගෙන යන්න!
                   </h3>
                   {vehicle.monthlyPayment && (
                     <div style={{ marginBottom: '16px', fontSize: '1.2rem', color: '#fff', fontWeight: 600, lineHeight: 1.5 }}>
-                      මාසික වාරිකය රු. <span style={{ color: '#d4af37', fontSize: '1.4rem', fontWeight: 800 }}>{vehicle.monthlyPayment.toLocaleString('en-LK')}</span> පමණයි.<br/>
-                      <span style={{ fontSize: '1rem', color: '#aaa', fontWeight: 500 }}>(කාලය අවුරුදු 5ක් සඳහා)</span>
+                      මාසික වාරිකය රු. <span style={{ color: '#ffd700', fontSize: '1.4rem', fontWeight: 800 }}>{vehicle.monthlyPayment.toLocaleString('en-LK')}</span> පමණයි.<br/>
+                      <span style={{ fontSize: '1rem', color: '#ffeaea', fontWeight: 500 }}>(කාලය අවුරුදු 5ක් සඳහා)</span>
                     </div>
                   )}
-                  <p style={{ fontSize: '1.1rem', margin: 0, color: '#999', fontWeight: 400, lineHeight: 1.6 }}>
+                  <p style={{ fontSize: '1.1rem', margin: 0, color: '#ffeaea', fontWeight: 400, lineHeight: 1.6 }}>
                     Experience luxury effortlessly. Pay the minimum initial amount today and drive away with your dream vehicle. Easy financing available!
                   </p>
                 </div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                   <a href={`https://wa.me/94714495632?text=${whatsappMsg}`} target="_blank" rel="noreferrer" style={{ 
                     display: 'inline-block',
-                    background: 'linear-gradient(90deg, #d4af37 0%, #aa8c2c 100%)', 
+                    background: 'linear-gradient(90deg, #ffd700 0%, #e6c200 100%)', 
                     color: '#000', 
                     padding: '18px 40px', 
                     borderRadius: '50px', 
@@ -183,17 +183,17 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
                     letterSpacing: '1px',
                     textTransform: 'uppercase',
                     textDecoration: 'none',
-                    boxShadow: '0 10px 30px rgba(212,175,55,0.3)',
+                    boxShadow: '0 10px 30px rgba(255,215,0,0.3)',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(212,175,55,0.5)';
+                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(255,215,0,0.5)';
                     e.currentTarget.style.filter = 'brightness(1.1)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'none';
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(212,175,55,0.3)';
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(255,215,0,0.3)';
                     e.currentTarget.style.filter = 'none';
                   }}>
                     Inquire Now
