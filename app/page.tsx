@@ -423,7 +423,7 @@ export default function HomePage() {
             {[1, 2, 3, 4].map((num) => (
               <div key={`customer-a-${num}`} className="customer-slide">
                 <div className="customer-image-wrapper">
-                  <img src={`/customers/c${num}.jpg`} alt={`Happy Customer ${num}`} className="customer-image" />
+                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
                 </div>
               </div>
             ))}
@@ -431,7 +431,7 @@ export default function HomePage() {
             {[1, 2, 3, 4].map((num) => (
               <div key={`customer-b-${num}`} className="customer-slide">
                 <div className="customer-image-wrapper">
-                  <img src={`/customers/c${num}.jpg`} alt={`Happy Customer ${num}`} className="customer-image" />
+                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
                 </div>
               </div>
             ))}
