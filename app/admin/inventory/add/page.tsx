@@ -105,6 +105,14 @@ export default function AddVehiclePage() {
   // active tab for multi-section form layout
   const [activeSection, setActiveSection] = useState<'specs' | 'details' | 'images'>('specs');
 
+  // Calculator States
+  const [showCalculator, setShowCalculator] = useState(false);
+  const [calcValuation, setCalcValuation] = useState('');
+  const [calcRealPrice, setCalcRealPrice] = useState('');
+  const [calcLeasingRate, setCalcLeasingRate] = useState('');
+  const [calcLoanRate, setCalcLoanRate] = useState('');
+
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -294,7 +302,17 @@ export default function AddVehiclePage() {
               <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '8px 0 0' }}>Add Vehicle Listing</h2>
               <p className="text-muted">Fill out the vehicle technical specs, options, pricing, and images.</p>
             </div>
-            <a href="/admin/inventory" className="button outline">← Cancel & Back</a>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                type="button" 
+                onClick={() => setShowCalculator(true)} 
+                className="button" 
+                style={{ background: '#2563eb', color: 'white', border: 'none' }}
+              >
+                🧮 Leasing Calculator
+              </button>
+              <a href="/admin/inventory" className="button outline">← Cancel & Back</a>
+            </div>
           </div>
 
           <div className="card panel" style={{ maxWidth: 960, margin: '0 auto', padding: 0, overflow: 'hidden' }}>
@@ -774,6 +792,98 @@ export default function AddVehiclePage() {
           )}
         </section>
       </div>
+
+      {/* ══════ LEASING CALCULATOR MODAL ══════ */}
+      {showCalculator && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', padding: '20px'
+        }}>
+          <div className="animate-fade-in" style={{
+            background: '#fff', borderRadius: '16px', width: '100%', maxWidth: '600px',
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', overflow: 'hidden'
+          }}>
+            {/* Header */}
+            <div style={{ background: 'var(--brand-red)', padding: '20px', color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800 }}>🧮 Leasing & Loan Calculator</h3>
+              <button type="button" onClick={() => setShowCalculator(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}>✕</button>
+            </div>
+            
+            {/* Body */}
+            <div style={{ padding: '24px' }}>
+              <div className="grid grid-2" style={{ gap: '16px' }}>
+                <div className="field" style={{ marginTop: 0 }}>
+                  <label>Valuation Amount (තක්සේරු මුදල)</label>
+                  <input type="text" value={calcValuation} onChange={e => setCalcValuation(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 5,000,000" />
+                </div>
+                <div className="field" style={{ marginTop: 0 }}>
+                  <label style={{ color: 'var(--brand-red)' }}>Real Price (ඇත්තම ගාන)</label>
+                  <input type="text" value={calcRealPrice} onChange={e => setCalcRealPrice(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 4,500,000" style={{ borderColor: 'var(--brand-red)', backgroundColor: '#fff4f4' }} />
+                </div>
+                <div className="field" style={{ marginTop: 0 }}>
+                  <label>Leasing Rate per Lakh (ලීසිං වාරිකය)</label>
+                  <input type="text" value={calcLeasingRate} onChange={e => setCalcLeasingRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2500" />
+                </div>
+                <div className="field" style={{ marginTop: 0 }}>
+                  <label>Loan Rate per Lakh (ලෝන් වාරිකය)</label>
+                  <input type="text" value={calcLoanRate} onChange={e => setCalcLoanRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2000" />
+                </div>
+              </div>
+
+              {/* Results */}
+              <div style={{ marginTop: '24px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '20px' }}>
+                <h4 style={{ margin: '0 0 16px 0', color: '#334155', borderBottom: '2px solid #e2e8f0', paddingBottom: '8px' }}>Calculation Breakdown</h4>
+                
+                {(() => {
+                  const realPrice = Number(calcRealPrice) || 0;
+                  const downPayment = realPrice * 0.4;
+                  const leasingAmt = realPrice * 0.4;
+                  const loanAmt = realPrice * 0.2;
+                  
+                  const leasingMonthly = (leasingAmt / 100000) * (Number(calcLeasingRate) || 0);
+                  const loanMonthly = (loanAmt / 100000) * (Number(calcLoanRate) || 0);
+                  const totalMonthly = leasingMonthly + loanMonthly;
+
+                  return (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.95rem' }}>
+                      <div className="flex-between">
+                        <span style={{ color: '#64748b', fontWeight: 600 }}>Downpayment (අතින් - 40%):</span>
+                        <span style={{ fontWeight: 800 }}>Rs. {downPayment.toLocaleString('en-LK')} <span style={{ color: '#64748b', fontSize: '0.85rem' }}>({(downPayment / 100000).toFixed(1)} LKR Lakhs)</span></span>
+                      </div>
+                      <div className="flex-between">
+                        <span style={{ color: '#64748b' }}>Leasing Amount (40%):</span>
+                        <span style={{ fontWeight: 600 }}>Rs. {leasingAmt.toLocaleString('en-LK')}</span>
+                      </div>
+                      <div className="flex-between">
+                        <span style={{ color: '#64748b' }}>Loan Amount (20%):</span>
+                        <span style={{ fontWeight: 600 }}>Rs. {loanAmt.toLocaleString('en-LK')}</span>
+                      </div>
+                      <div style={{ height: '1px', background: '#e2e8f0', margin: '4px 0' }} />
+                      <div className="flex-between" style={{ fontSize: '1.25rem', color: 'var(--brand-red)' }}>
+                        <span style={{ fontWeight: 800 }}>Total Monthly Payment:</span>
+                        <span style={{ fontWeight: 900 }}>Rs. {totalMonthly.toLocaleString('en-LK')}</span>
+                      </div>
+
+                      <button 
+                        type="button" 
+                        onClick={() => {
+                          const lakhs = (downPayment / 100000).toFixed(1);
+                          setInitialPayment(lakhs.endsWith('.0') ? lakhs.split('.')[0] : lakhs);
+                          setShowCalculator(false);
+                        }}
+                        style={{ marginTop: '16px', background: 'var(--brand-red)', color: 'white', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', display: 'flex', justifyContent: 'center', gap: '8px' }}
+                      >
+                        ⚡ Use this Downpayment ({((downPayment / 100000)).toFixed(1)} Lakhs)
+                      </button>
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
