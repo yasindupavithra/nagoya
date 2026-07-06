@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { fetchActiveVehicles } from '../lib/firestore';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://nagoyaglobal.lk';
+  const baseUrl = 'https://www.nagoyaglobal.lk';
   
   // Static routes
   const routes = ['', '/inventory', '/about', '/contact', '/leasing'].map((route) => ({

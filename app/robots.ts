@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://nagoyaglobal.lk/sitemap.xml',
+    sitemap: 'https://www.nagoyaglobal.lk/sitemap.xml',
   };
 }
