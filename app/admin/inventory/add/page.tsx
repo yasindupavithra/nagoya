@@ -75,6 +75,7 @@ export default function AddVehiclePage() {
   const [year, setYear] = useState(2020);
   const [price, setPrice] = useState('');
   const [initialPayment, setInitialPayment] = useState('');
+  const [monthlyPayment, setMonthlyPayment] = useState('');
   const [mileage, setMileage] = useState('');
   const [cc, setCc] = useState('1500');
   const [location, setLocation] = useState('');
@@ -233,6 +234,7 @@ export default function AddVehiclePage() {
         year: Number(year),
         price: Number(price),
         initialPayment: initialPayment ? Number(initialPayment) : undefined,
+        monthlyPayment: monthlyPayment ? Number(monthlyPayment) : undefined,
         mileage: Number(mileage),
         fuelType,
         transmission,
@@ -415,6 +417,20 @@ export default function AddVehiclePage() {
                           💡 සයිට් එකේ පේන්නේ: අතින් ලක්ෂ {Number(initialPayment).toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක් දීලා අරගෙන යන්න!
                         </div>
                       )}
+                    </div>
+
+                    <div className="field" style={{ marginTop: 0 }}>
+                      <label>Total Monthly Payment (LKR) / මාසික වාරිකය (රුපියල් වලින්)</label>
+                      <input 
+                        type="text"
+                        inputMode="numeric"
+                        value={monthlyPayment} 
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9]/g, '');
+                          setMonthlyPayment(val);
+                        }} 
+                        placeholder="e.g. 135000"
+                      />
                     </div>
 
                     <div className="field" style={{ marginTop: 0 }}>
@@ -869,11 +885,12 @@ export default function AddVehiclePage() {
                         onClick={() => {
                           const lakhs = (downPayment / 100000).toFixed(1);
                           setInitialPayment(lakhs.endsWith('.0') ? lakhs.split('.')[0] : lakhs);
+                          setMonthlyPayment(Math.round(totalMonthly).toString());
                           setShowCalculator(false);
                         }}
                         style={{ marginTop: '16px', background: 'var(--brand-red)', color: 'white', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', display: 'flex', justifyContent: 'center', gap: '8px' }}
                       >
-                        ⚡ Use this Downpayment ({((downPayment / 100000)).toFixed(1)} Lakhs)
+                        ⚡ Use this Downpayment ({((downPayment / 100000)).toFixed(1)} Lakhs) & Monthly Payment
                       </button>
                     </div>
                   );
