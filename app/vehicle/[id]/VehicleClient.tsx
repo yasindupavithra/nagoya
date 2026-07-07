@@ -199,14 +199,14 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
                     <span style={{ display: 'inline-block', width: '6px', height: '6px', backgroundColor: '#ffd700', borderRadius: '50%', boxShadow: '0 0 10px #ffd700' }}></span>
                     Premium Financing
                   </div>
-                  <h3 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', fontWeight: 900, margin: '0 0 12px 0', lineHeight: 1.3, letterSpacing: '-0.5px', color: '#fff' }}>
-                    අතින් ලක්ෂ <span style={{ color: '#ffd700' }}>{vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}ක්</span> <br/> 
-                    දීලා අරගෙන යන්න!
+                  <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)', fontWeight: 900, margin: '0 0 12px 0', lineHeight: 1.4, letterSpacing: '-0.2px', color: '#fff' }}>
+                    මූලික ගෙවීම (Down Payment) ලක්ශ <span style={{ color: '#ffd700' }}>{vehicle.initialPayment.toLocaleString('en-LK', { maximumFractionDigits: 1 })}</span> ක් <br/> 
+                    ගෙවා අරන් යන්න
                   </h3>
                   {vehicle.monthlyPayment && (
-                    <div style={{ marginBottom: '16px', fontSize: '1.2rem', color: '#fff', fontWeight: 600, lineHeight: 1.5 }}>
-                      මාසික වාරිකය රු. <span style={{ color: '#ffd700', fontSize: '1.4rem', fontWeight: 800 }}>{vehicle.monthlyPayment.toLocaleString('en-LK')}</span> පමණයි.<br/>
-                      <span style={{ fontSize: '1rem', color: '#ffeaea', fontWeight: 500 }}>(කාලය අවුරුදු 5ක් සඳහා)</span>
+                    <div style={{ marginBottom: '16px', fontSize: '1.1rem', color: '#fff', fontWeight: 600, lineHeight: 1.5 }}>
+                      මාසික වාරිකය (Installment) <span style={{ color: '#ffd700', fontSize: '1.3rem', fontWeight: 800 }}>{vehicle.monthlyPayment.toLocaleString('en-LK')}</span>ක් පමණි.<br/>
+                      <span style={{ fontSize: '1rem', color: '#ffeaea', fontWeight: 500 }}>කාලය අවුරුදු 5 කටම</span>
                     </div>
                   )}
                   <p style={{ fontSize: '1.1rem', margin: 0, color: '#ffeaea', fontWeight: 400, lineHeight: 1.6 }}>
