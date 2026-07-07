@@ -99,31 +99,73 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
 
         {/* Thumbnails */}
         {vehicle.imageUrls.length > 1 && (
-          <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '16px' }} className="hide-scrollbar">
-            <style>{`
-              .hide-scrollbar::-webkit-scrollbar { display: none; }
-            `}</style>
-            {vehicle.imageUrls.map((url) => (
-              <button
-                key={url}
-                type="button"
-                onClick={() => setSelectedImage(url)}
+          <div style={{ position: 'relative', marginBottom: '24px' }}>
+            {vehicle.imageUrls.length > 5 && (
+              <button 
+                onClick={() => {
+                  const container = document.getElementById('thumbnail-container');
+                  if (container) container.scrollBy({ left: -300, behavior: 'smooth' });
+                }}
                 style={{
-                  width: '140px',
-                  height: '90px',
-                  flexShrink: 0,
-                  borderRadius: '10px',
-                  overflow: 'hidden',
-                  border: selectedImage === url ? '3px solid #e50000' : '2px solid transparent',
-                  cursor: 'pointer',
-                  padding: 0,
-                  backgroundColor: '#fff',
-                  transition: 'all 0.2s ease'
+                  position: 'absolute', left: '-16px', top: '45px', transform: 'translateY(-50%)',
+                  background: 'rgba(255,255,255,0.95)', border: '1px solid #eaeaea', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', zIndex: 10, color: '#111', fontSize: '1.2rem'
                 }}
               >
-                <img src={url} alt="Thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: selectedImage === url ? 1 : 0.6, transition: 'opacity 0.2s' }} />
+                ←
               </button>
-            ))}
+            )}
+            
+            <div id="thumbnail-container" style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px', scrollBehavior: 'smooth' }} className="hide-scrollbar">
+              <style>{`
+                .hide-scrollbar::-webkit-scrollbar { display: none; }
+              `}</style>
+              {vehicle.imageUrls.map((url) => (
+                <button
+                  key={url}
+                  type="button"
+                  onClick={() => setSelectedImage(url)}
+                  style={{
+                    width: '140px',
+                    height: '90px',
+                    flexShrink: 0,
+                    borderRadius: '10px',
+                    overflow: 'hidden',
+                    border: selectedImage === url ? '3px solid #e50000' : '2px solid transparent',
+                    cursor: 'pointer',
+                    padding: 0,
+                    backgroundColor: '#fff',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <img src={url} alt="Thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: selectedImage === url ? 1 : 0.6, transition: 'opacity 0.2s' }} />
+                </button>
+              ))}
+              {/* Visual indicator at the end */}
+              {vehicle.imageUrls.length > 5 && (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 20px', color: '#999', fontSize: '1.5rem' }}>
+                  ➔
+                </div>
+              )}
+            </div>
+
+            {vehicle.imageUrls.length > 5 && (
+              <button 
+                onClick={() => {
+                  const container = document.getElementById('thumbnail-container');
+                  if (container) container.scrollBy({ left: 300, behavior: 'smooth' });
+                }}
+                style={{
+                  position: 'absolute', right: '-16px', top: '45px', transform: 'translateY(-50%)',
+                  background: 'rgba(255,255,255,0.95)', border: '1px solid #eaeaea', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', zIndex: 10, color: '#111', fontSize: '1.2rem'
+                }}
+              >
+                ➔
+              </button>
+            )}
           </div>
         )}
 

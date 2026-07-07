@@ -254,7 +254,7 @@ export default function HomePage() {
 
       {/* ══════ NEW CTA BUTTON ══════ */}
       <section className="container" style={{ textAlign: 'center', marginTop: '60px', marginBottom: '-20px', position: 'relative', zIndex: 10 }}>
-        <a 
+        <a
           href="/calculator"
           className="shimmer-btn-wrapper"
           style={{
@@ -298,7 +298,8 @@ export default function HomePage() {
             </svg>
           </span>
         </a>
-        <style dangerouslySetInnerHTML={{__html: `
+        <style dangerouslySetInnerHTML={{
+          __html: `
           @keyframes shimmerSweepNew {
             0% { transform: translateX(-150%) skewX(-25deg); }
             100% { transform: translateX(200%) skewX(-25deg); }
