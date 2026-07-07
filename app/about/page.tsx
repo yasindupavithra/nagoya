@@ -99,14 +99,14 @@ export default function AboutPage() {
             </div>
 
             {/* Story Image */}
-            <div style={{ position: 'relative', height: '600px', borderRadius: '32px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.15)' }}>
+            <div style={{ position: 'relative', height: '600px', borderRadius: '32px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.15), 0 0 0 8px rgba(255,255,255,0.8)', border: '1px solid #eaeaea' }}>
               <Image 
-                src="/images/nagoya_about_story.png" 
-                alt="Nagoya Customer Trust" 
+                src="/Owner/WhatsApp Image 2026-07-06 at 11.04.55 PM.jpeg" 
+                alt="Nagoya Auto Auction Owner" 
                 fill
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover', objectPosition: 'center 20%', filter: 'contrast(1.05) saturate(1.1)' }}
               />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(45deg, rgba(229,0,0,0.1) 0%, transparent 100%)' }}></div>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(229,0,0,0.15) 0%, transparent 50%, rgba(0,0,0,0.2) 100%)', mixBlendMode: 'overlay' }}></div>
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function AboutPage() {
               { icon: '💰', title: 'Fair Pricing', desc: 'No hidden fees or markups. What you see is what you pay, backed by market-competitive rates.' },
               { icon: '🚚', title: 'Island Delivery', desc: 'We deliver your vehicle to your doorstep anywhere in Sri Lanka.' },
               { icon: '🏦', title: 'Leasing Support', desc: 'Partnered with major banks to offer flexible leasing options with competitive rates.' },
-              { icon: '🤝', title: 'After-Sale Care', desc: 'Our relationship doesn\'t end at sale. We provide ongoing support and maintenance guidance.' },
+              { icon: '🤝', title: 'After-Sale Care', desc: 'Our relationship doesn\'t end at sale. We provide a FREE 2-Year / 100,000 km Warranty with every vehicle.' },
             ].map((feature, i) => (
               <div key={i} style={{ backgroundColor: '#fff', padding: '48px 40px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', border: '1px solid #f0f0f0' }}>
                 <div style={{ fontSize: '2.5rem', marginBottom: '24px', background: 'rgba(229,0,0,0.05)', display: 'inline-flex', padding: '16px', borderRadius: '20px' }}>
@@ -137,6 +137,20 @@ export default function AboutPage() {
                 <p style={{ color: '#666', lineHeight: 1.7, fontSize: '1.05rem' }}>{feature.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Warranty Banner */}
+      <section style={{ padding: '60px 0', backgroundColor: '#e50000', color: '#fff' }}>
+        <div className="container">
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '20px' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '10px', background: '#fff', borderRadius: '50%', width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#e50000', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>✅</div>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 900, margin: 0, letterSpacing: '-1px' }}>FREE 2-Year / 100,000 km Warranty</h2>
+            <p style={{ fontSize: '1.2rem', maxWidth: '600px', lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+              Enjoy peace of mind with every vehicle you purchase from us.<br />
+              2-Year or 100,000 km Warranty (whichever comes first).
+            </p>
           </div>
         </div>
       </section>

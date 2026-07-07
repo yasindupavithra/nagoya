@@ -163,10 +163,51 @@ export default function LeasingPage() {
               <p style={{ color: '#777', marginBottom: '24px', fontSize: '1rem', lineHeight: 1.5 }}>
                 We work with Sri Lanka&apos;s leading financial institutions to offer you the best rates.
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-                {['Bank of Ceylon', "People's Bank", 'Commercial Bank', 'HNB', 'Sampath Bank'].map(bank => (
-                  <div key={bank} style={{ padding: '10px 20px', backgroundColor: '#f8f8f8', borderRadius: '12px', fontSize: '0.95rem', fontWeight: 700, color: '#333', border: '1px solid #eee' }}>
-                    {bank}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
+                {[
+                  { name: 'LOLC', logo: '/Bank%20Logo/unnamed.png' },
+                  { name: 'HNB FINANCE', logo: '/Bank%20Logo/images.jpg' },
+                  { name: 'LB FINANCE', logo: '/Bank%20Logo/images%20(1).jpg' },
+                  { name: "PEOPLE'S LEASING", logo: '/Bank%20Logo/People\'s_Leasing_logo.png' },
+                  { name: 'SIYAPATHA', logo: '/Bank%20Logo/b651ea58720747.Y3JvcCw5MTQsNzE1LDkwLDA.png' },
+                  { name: 'SEYLAN', logo: '/Bank%20Logo/sbklogo-media-listing-page.jpg' },
+                ].map(partner => (
+                  <div key={partner.name} style={{ 
+                    backgroundColor: '#fff', 
+                    borderRadius: '16px', 
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                    border: '1px solid #eaeaea',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '20px',
+                    aspectRatio: '1',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
+                  }}
+                  >
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name} 
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          parent.innerText = partner.name;
+                          parent.style.fontSize = '14px';
+                          parent.style.fontWeight = 'bold';
+                          parent.style.textAlign = 'center';
+                        }
+                      }}
+                    />
                   </div>
                 ))}
               </div>

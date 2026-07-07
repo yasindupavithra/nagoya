@@ -373,7 +373,7 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
           <div>
             <div style={{ position: 'sticky', top: '100px', backgroundColor: '#fff', padding: '40px 32px', borderRadius: '16px', border: '1px solid #eaeaea', boxShadow: '0 12px 32px rgba(0,0,0,0.08)' }}>
               <div style={{ fontSize: '0.9rem', color: '#666', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: 700, marginBottom: '12px' }}>Vehicle Price</div>
-              <div style={{ fontSize: '3.2rem', fontWeight: 900, color: '#e50000', lineHeight: 1, marginBottom: vehicle.initialPayment ? '16px' : '40px' }}>
+              <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#e50000', lineHeight: 1, marginBottom: vehicle.initialPayment ? '16px' : '40px' }}>
                  Rs {vehicle.price.toLocaleString('en-LK')}
               </div>
 

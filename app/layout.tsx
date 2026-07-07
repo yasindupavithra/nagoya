@@ -12,15 +12,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://nagoyaglobal.lk'),
   title: {
-    template: '%s | Nagoya Auto Auction',
-    default: 'Nagoya Auto Auction — Sri Lanka\'s Largest Auto Auction',
+    template: '%s | Nagoya Global Auto Auction',
+    default: 'Nagoya Global Auto Auction — Sri Lanka\'s Largest Vehicle Importer',
   },
-  description: 'Find certified Japanese cars with transparent pricing. Browse inventory, calculate leases, and get verified inspection reports.',
-  keywords: ['auto auction sri lanka', 'japanese cars sri lanka', 'buy vehicles colombo', 'nagoya auto', 'nagoya global'],
-  authors: [{ name: 'Nagoya Auto' }],
+  description: 'Find certified Japanese cars with transparent pricing at Nagoya Global. Browse our inventory, calculate leases, and get verified vehicle inspection reports in Sri Lanka.',
+  keywords: ['nagoya global', 'nagoya auto auction', 'nagoya global sri lanka', 'japanese cars sri lanka', 'buy vehicles colombo'],
+  authors: [{ name: 'Nagoya Global' }],
   openGraph: {
-    title: 'Nagoya Auto Auction — Sri Lanka\'s Largest Auto Auction',
-    description: 'Find certified Japanese cars with transparent pricing. Browse inventory, calculate leases, and get verified inspection reports.',
+    title: 'Nagoya Global Auto Auction — Sri Lanka\'s Largest Auto Auction',
+    description: 'Find certified Japanese cars with transparent pricing at Nagoya Global. Browse inventory, calculate leases, and get verified inspection reports.',
     url: 'https://www.nagoyaglobal.lk',
     siteName: 'Nagoya Global',
     images: [

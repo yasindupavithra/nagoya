@@ -117,44 +117,44 @@ export default function HomePage() {
           className={`hero-section${heroVisible ? ' hero-visible' : ''}`}
           style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
         >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
-          {heroImages.map((src, idx) => (
-            <div
-              key={src}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                transform: `translateX(${(idx - currentSlide) * 100}%)`,
-                transition: 'transform 1s ease-in-out',
-                willChange: 'transform'
-              }}
-            >
-              <Image
-                src={src}
-                alt={`Nagoya Auto Hero Banner ${idx + 1}`}
-                fill
-                priority={idx === 0}
-                quality={100}
-                sizes="100vw"
+          <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
+            {heroImages.map((src, idx) => (
+              <div
+                key={src}
                 style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center'
+                  position: 'absolute',
+                  inset: 0,
+                  transform: `translateX(${(idx - currentSlide) * 100}%)`,
+                  transition: 'transform 1s ease-in-out',
+                  willChange: 'transform'
                 }}
-              />
-            </div>
-          ))}
-        </div>
-
-        <div className="hero-text-container" style={{ position: 'absolute', bottom: '18%', left: '4%', zIndex: 2 }}>
-          <div style={{ display: 'inline-block' }}>
-            <p style={{ color: '#fff', fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 500, margin: 0, textShadow: '0 4px 8px rgba(0,0,0,0.8)' }}>
-              For All Your Vehicle Solutions
-            </p>
-            <h1 style={{ color: '#fff', fontSize: 'clamp(3.5rem, 7vw, 5.5rem)', lineHeight: 1.1, fontWeight: 800, margin: '0', textShadow: '0 4px 12px rgba(0,0,0,0.8)', letterSpacing: '-1px' }}>
-              Nagoya <span style={{ color: '#E52329' }}>Auto Auction</span>
-            </h1>
+              >
+                <Image
+                  src={src}
+                  alt={`Nagoya Auto Hero Banner ${idx + 1}`}
+                  fill
+                  priority={idx === 0}
+                  quality={100}
+                  sizes="100vw"
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center'
+                  }}
+                />
+              </div>
+            ))}
           </div>
-        </div>
+
+          <div className="hero-text-container" style={{ position: 'absolute', bottom: '18%', left: '4%', zIndex: 2 }}>
+            <div style={{ display: 'inline-block' }}>
+              <p style={{ color: '#fff', fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 500, margin: 0, textShadow: '0 4px 8px rgba(0,0,0,0.8)' }}>
+                For All Your Vehicle Solutions
+              </p>
+              <h1 style={{ color: '#fff', fontSize: 'clamp(3.5rem, 7vw, 5.5rem)', lineHeight: 1.1, fontWeight: 800, margin: '0', textShadow: '0 4px 12px rgba(0,0,0,0.8)', letterSpacing: '-1px' }}>
+                Nagoya <span style={{ color: '#E52329' }}>Auto Auction</span>
+              </h1>
+            </div>
+          </div>
 
         </section>
 
@@ -252,8 +252,72 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══════ NEW CTA BUTTON ══════ */}
+      <section className="container" style={{ textAlign: 'center', marginTop: '60px', marginBottom: '-20px', position: 'relative', zIndex: 10 }}>
+        <a 
+          href="/calculator"
+          className="shimmer-btn-wrapper"
+          style={{
+            display: 'inline-flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            background: 'linear-gradient(135deg, #d32f2f 0%, #900000 100%)',
+            padding: '20px 64px',
+            borderRadius: '100px',
+            color: '#fff',
+            textDecoration: 'none',
+            boxShadow: '0 20px 40px rgba(211, 47, 47, 0.4), inset 0 2px 0 rgba(255,255,255,0.3)',
+            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            border: '2px solid rgba(255,255,255,0.15)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-6px)';
+            e.currentTarget.style.boxShadow = '0 24px 56px rgba(211, 47, 47, 0.6), inset 0 2px 0 rgba(255,255,255,0.5)';
+            e.currentTarget.style.border = '2px solid rgba(255,255,255,0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 20px 40px rgba(211, 47, 47, 0.4), inset 0 2px 0 rgba(255,255,255,0.3)';
+            e.currentTarget.style.border = '2px solid rgba(255,255,255,0.15)';
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'clamp(0.85rem, 2vw, 1.1rem)', fontWeight: 600, opacity: 0.9, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Order Your Vehicle Today
+          </span>
+          <span style={{ fontSize: 'clamp(1.6rem, 5vw, 2.5rem)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '12px', letterSpacing: '-0.5px' }}>
+            Get Quotation
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '2px' }}>
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </span>
+        </a>
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes shimmerSweepNew {
+            0% { transform: translateX(-150%) skewX(-25deg); }
+            100% { transform: translateX(200%) skewX(-25deg); }
+          }
+          .shimmer-btn-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmerSweepNew 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+          }
+        `}} />
+      </section>
+
       {/* ══════ LATEST ARRIVALS ══════ */}
-      <section id="latest-arrivals" style={{ backgroundColor: '#ffffff', padding: '64px 0', color: '#111' }}>
+      <section id="latest-arrivals" style={{ backgroundColor: '#ffffff', padding: '80px 0 64px', color: '#111' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eaeaea', paddingBottom: '16px', marginBottom: '32px' }}>
             <h2 style={{ fontSize: '2.2rem', fontWeight: 900, textTransform: 'uppercase', margin: 0, display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -304,47 +368,51 @@ export default function HomePage() {
                 'Audi': '/logos/audi.svg',
                 'Kia': '/logos/kia.svg',
                 'Ford': '/logos/ford.svg',
-                'Volkswagen': '/logos/volkswagen.svg'
+                'Volkswagen': '/logos/volkswagen.svg',
+                'Mercedes-Benz': '/logos/mercedes-benz.svg',
+                'Lexus': '/logos/lexus.svg',
+                'Foton': '/logos/foton.svg'
               };
-              
+
               return (
-              <button 
-                key={brand}
-                onClick={() => {
-                  setBrandFilter(brand === 'All' ? '' : brand);
-                  document.getElementById('latest-arrivals')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '12px',
-                  width: '130px',
-                  height: '110px',
-                  borderRadius: '16px',
-                  border: isActive ? '2px solid #e50000' : '1px solid #eaeaea',
-                  backgroundColor: isActive ? '#fffaf1' : '#fff',
-                  color: isActive ? '#e50000' : '#444',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  boxShadow: isActive ? '0 8px 24px rgba(229,0,0,0.12)' : '0 4px 12px rgba(0,0,0,0.04)',
-                  transition: 'all 0.3s ease',
-                  transform: isActive ? 'translateY(-4px)' : 'none'
-                }}
-              >
-                {brand !== 'All' && brandLogos[brand] && (
-                  <img 
-                    src={brandLogos[brand]} 
-                    alt={brand} 
-                    style={{ width: '48px', height: '48px', objectFit: 'contain' }}
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                  />
-                )}
-                {brand === 'All' && <span style={{ fontSize: '24px' }}>🌐</span>}
-                {brand}
-              </button>
-            )})}
+                <button
+                  key={brand}
+                  onClick={() => {
+                    setBrandFilter(brand === 'All' ? '' : brand);
+                    document.getElementById('latest-arrivals')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    width: '130px',
+                    height: '110px',
+                    borderRadius: '16px',
+                    border: isActive ? '2px solid #e50000' : '1px solid #eaeaea',
+                    backgroundColor: isActive ? '#fffaf1' : '#fff',
+                    color: isActive ? '#e50000' : '#444',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    boxShadow: isActive ? '0 8px 24px rgba(229,0,0,0.12)' : '0 4px 12px rgba(0,0,0,0.04)',
+                    transition: 'all 0.3s ease',
+                    transform: isActive ? 'translateY(-4px)' : 'none'
+                  }}
+                >
+                  {brand !== 'All' && brandLogos[brand] && (
+                    <img
+                      src={brandLogos[brand]}
+                      alt={brand}
+                      style={{ width: '48px', height: '48px', objectFit: 'contain' }}
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    />
+                  )}
+                  {brand === 'All' && <span style={{ fontSize: '24px' }}>🌐</span>}
+                  {brand}
+                </button>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -357,22 +425,47 @@ export default function HomePage() {
         </div>
         <div className="customer-slider-container">
           <div className="customer-slider-track">
-            {/* First Set of Images */}
-            {[1, 2, 3, 4].map((num) => (
-              <div key={`customer-a-${num}`} className="customer-slide">
-                <div className="customer-image-wrapper">
-                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
-                </div>
-              </div>
-            ))}
-            {/* Second Set of Images for Infinite Loop */}
-            {[1, 2, 3, 4].map((num) => (
-              <div key={`customer-b-${num}`} className="customer-slide">
-                <div className="customer-image-wrapper">
-                  <img src={`/customers/c${num}.png`} alt={`Happy Customer ${num}`} className="customer-image" />
-                </div>
-              </div>
-            ))}
+            {/* Array of all customer images */}
+            {(() => {
+              const customerImages = [
+                'c1.png',
+                'c2.png',
+                'c3.png',
+                'c4.png',
+                'WhatsApp Image 2026-07-06 at 11.05.24 PM.jpeg',
+                'WhatsApp Image 2026-07-07 at 1.44.24 PM.jpeg',
+                'WhatsApp Image 2026-07-07 at 1.44.45 PM.jpeg',
+                'WhatsApp Image 2026-07-07 at 1.45.11 PM.jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM (1).jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM (2).jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM (3).jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM (4).jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM (5).jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM (6).jpeg',
+                'WhatsApp Image 2026-07-07 at 2.05.34 PM.jpeg'
+              ];
+
+              return (
+                <>
+                  {/* First Set of Images */}
+                  {customerImages.map((imgName, index) => (
+                    <div key={`customer-a-${index}`} className="customer-slide">
+                      <div className="customer-image-wrapper">
+                        <img src={`/customers/${imgName}`} alt={`Happy Customer ${index + 1}`} className="customer-image" style={{ objectFit: 'cover' }} />
+                      </div>
+                    </div>
+                  ))}
+                  {/* Second Set of Images for Infinite Loop */}
+                  {customerImages.map((imgName, index) => (
+                    <div key={`customer-b-${index}`} className="customer-slide">
+                      <div className="customer-image-wrapper">
+                        <img src={`/customers/${imgName}`} alt={`Happy Customer ${index + 1}`} className="customer-image" style={{ objectFit: 'cover' }} />
+                      </div>
+                    </div>
+                  ))}
+                </>
+              );
+            })()}
           </div>
         </div>
       </section>
