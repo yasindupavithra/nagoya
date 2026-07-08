@@ -7,18 +7,44 @@ export default function CalculatorPage() {
   const [quoteForm, setQuoteForm] = useState({
     name: '', whatsapp: '', make: '', model: '', year: '', engine: '', color: '', grade: '', notes: ''
   });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSending, setIsSending] = useState(false);
 
   const handleQuoteChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setQuoteForm(prev => ({ ...prev, [field]: e.target.value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    const { name, whatsapp, make, model } = quoteForm;
+    
+    if (!name.trim()) newErrors.name = "Name is required";
+    
+    if (!whatsapp.trim()) {
+      newErrors.whatsapp = "WhatsApp number is required";
+    } else {
+      const phoneRegex = /^[+]?[\d\s-]{9,15}$/;
+      if (!phoneRegex.test(whatsapp)) {
+        newErrors.whatsapp = "Please enter a valid phone number";
+      }
+    }
+    
+    if (!make.trim()) newErrors.make = "Vehicle make is required";
+    if (!model.trim()) newErrors.model = "Vehicle model is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleQuoteSubmit = () => {
-    const { name, whatsapp, make, model, year, engine, color, grade, notes } = quoteForm;
-    if (!name || !whatsapp || !make || !model) {
-      alert("Please fill in all required fields (*).");
+    if (!validateForm()) {
       return;
     }
+    
+    const { name, whatsapp, make, model, year, engine, color, grade, notes } = quoteForm;
     
     // Format the message for WhatsApp
     const message = `*New Vehicle Quotation Request* 🚗
@@ -59,20 +85,24 @@ ${notes || 'None'}`;
           <form style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>Your Name *</label>
-              <input value={quoteForm.name} onChange={handleQuoteChange('name')} type="text" placeholder="e.g., John Doe" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none' }} />
+              <input value={quoteForm.name} onChange={handleQuoteChange('name')} type="text" placeholder="e.g., John Doe" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: `1px solid ${errors.name ? 'red' : '#ddd'}`, fontSize: '1rem', outline: 'none' }} />
+              {errors.name && <span style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>{errors.name}</span>}
             </div>
             <div>
               <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>WhatsApp Number *</label>
-              <input value={quoteForm.whatsapp} onChange={handleQuoteChange('whatsapp')} type="tel" placeholder="+94 7X XXX XXXX" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none' }} />
+              <input value={quoteForm.whatsapp} onChange={handleQuoteChange('whatsapp')} type="tel" placeholder="+94 7X XXX XXXX" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: `1px solid ${errors.whatsapp ? 'red' : '#ddd'}`, fontSize: '1rem', outline: 'none' }} />
+              {errors.whatsapp && <span style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>{errors.whatsapp}</span>}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>Vehicle Make *</label>
-                <input value={quoteForm.make} onChange={handleQuoteChange('make')} type="text" placeholder="e.g., Toyota" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none' }} />
+                <input value={quoteForm.make} onChange={handleQuoteChange('make')} type="text" placeholder="e.g., Toyota" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: `1px solid ${errors.make ? 'red' : '#ddd'}`, fontSize: '1rem', outline: 'none' }} />
+                {errors.make && <span style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>{errors.make}</span>}
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>Vehicle Model *</label>
-                <input value={quoteForm.model} onChange={handleQuoteChange('model')} type="text" placeholder="e.g., Aqua" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none' }} />
+                <input value={quoteForm.model} onChange={handleQuoteChange('model')} type="text" placeholder="e.g., Aqua" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: `1px solid ${errors.model ? 'red' : '#ddd'}`, fontSize: '1rem', outline: 'none' }} />
+                {errors.model && <span style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>{errors.model}</span>}
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>

@@ -6,6 +6,7 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/inventory', label: 'Stock' },
   { href: '/leasing', label: 'Leasing' },
+  { href: '/calculator', label: 'Request Quote' },
   { href: '/about', label: 'About Us' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -62,37 +63,42 @@ export default function Header() {
       </div>
       <div className="container nav-bar">
         <div className="mobile-left-spacer"></div>
-        <a href="/" className="brand-group">
-          <img 
-            src="/logo.png" 
-            alt="Nagoya Auto" 
-          />
-          <div className="brand-name-block">
-            <span className="brand-main">NAGOYA AUTO</span>
-            <span className="brand-tagline">Certified Dealership</span>
-          </div>
-        </a>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+          <a href="/" className="brand-group">
+            <img 
+              src="/logo.png" 
+              alt="Nagoya Auto" 
+            />
+            <div className="brand-name-block">
+              <span className="brand-main">NAGOYA AUTO</span>
+              <span className="brand-tagline">Certified Dealership</span>
+            </div>
+          </a>
+        </div>
 
-        <div className="hidden-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginLeft: 'auto', marginRight: '56px' }}>
+        <div className="hidden-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', flexShrink: 0, margin: '0 20px' }}>
           <div style={{ display: 'flex', gap: '14px' }}>
             <img src="https://flagcdn.com/w80/jp.png" alt="Japan" style={{ height: '32px', width: '48px', objectFit: 'cover', border: '1px solid #e0e0e0', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }} />
             <img src="https://flagcdn.com/w80/de.png" alt="Germany" style={{ height: '32px', width: '48px', objectFit: 'cover', border: '1px solid #e0e0e0', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }} />
             <img src="https://flagcdn.com/w80/gb.png" alt="United Kingdom" style={{ height: '32px', width: '48px', objectFit: 'cover', border: '1px solid #e0e0e0', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }} />
           </div>
-          <span style={{ fontSize: '13px', color: '#777', fontWeight: 600, letterSpacing: '0.3px' }}>Japan | Germany | United Kingdom</span>
+          <span style={{ fontSize: '13px', color: '#777', fontWeight: 600, letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>Japan | Germany | United Kingdom</span>
         </div>
 
-        <nav className="nav-links">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={pathname === item.href ? 'active' : ''}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          <nav className="nav-links">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={pathname === item.href ? 'active' : ''}
+                style={item.label === 'Contact' ? { marginLeft: '24px' } : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
 
         <button
           className={`hamburger${menuOpen ? ' open' : ''}`}

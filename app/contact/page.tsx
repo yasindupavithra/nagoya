@@ -69,7 +69,7 @@ export default function ContactPage() {
             
             <div id="map" style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #eaeaea' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '16px', color: '#111' }}>Our Location</h3>
-              <a href="https://www.google.com/maps/search/?api=1&query=Nagoya+Auto+Auction,+Munagama,+Horana" target="_blank" rel="noreferrer" style={{
+              <a href="https://www.google.com/maps/search/?api=1&query=Nagoya+Auto+Auction+Horana+Branch" target="_blank" rel="noreferrer" style={{
                 height: '350px',
                 borderRadius: '16px',
                 background: 'url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80") center/cover no-repeat',

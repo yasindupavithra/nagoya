@@ -809,46 +809,90 @@ export default function AddVehiclePage() {
         </section>
       </div>
 
-      {/* ══════ LEASING CALCULATOR MODAL ══════ */}
+      {/* ══════ LEASING CALCULATOR MODAL (PREMIUM UI) ══════ */}
       {showCalculator && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', padding: '20px'
+          background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(8px)', padding: '20px'
         }}>
           <div className="animate-fade-in" style={{
-            background: '#fff', borderRadius: '16px', width: '100%', maxWidth: '600px',
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', overflow: 'hidden'
+            background: '#ffffff', borderRadius: '24px', width: '100%', maxWidth: '640px',
+            boxShadow: '0 30px 60px -15px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2)', overflow: 'hidden',
+            display: 'flex', flexDirection: 'column', maxHeight: '90vh', overflowY: 'auto'
           }}>
             {/* Header */}
-            <div style={{ background: 'var(--brand-red)', padding: '20px', color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800 }}>🧮 Leasing & Loan Calculator</h3>
-              <button type="button" onClick={() => setShowCalculator(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}>✕</button>
+            <div style={{ 
+              background: 'linear-gradient(135deg, #e50000 0%, #a80000 100%)', 
+              padding: '24px 32px', color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              boxShadow: '0 4px 20px rgba(229, 0, 0, 0.2)'
+            }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '1.6rem' }}>🧮</span> Leasing & Loan Calculator
+                </h3>
+                <p style={{ margin: '4px 0 0', fontSize: '0.85rem', opacity: 0.9, fontWeight: 500 }}>Calculate downpayment and monthly installments</p>
+              </div>
+              <button type="button" onClick={() => setShowCalculator(false)} style={{ 
+                background: 'rgba(255,255,255,0.2)', border: 'none', color: '#fff', width: '36px', height: '36px', 
+                borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'background 0.2s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+              >✕</button>
             </div>
             
             {/* Body */}
-            <div style={{ padding: '24px' }}>
-              <div className="grid grid-2" style={{ gap: '16px' }}>
-                <div className="field" style={{ marginTop: 0 }}>
-                  <label>Valuation Amount (තක්සේරු මුදල)</label>
-                  <input type="text" value={calcValuation} onChange={e => setCalcValuation(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 5,000,000" />
+            <div style={{ padding: '32px' }}>
+              <div className="grid grid-2" style={{ gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Valuation Amount <span style={{ textTransform: 'none', color: '#94a3b8' }}>(තක්සේරු මුදල)</span></label>
+                  <div style={{ position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', fontWeight: 600 }}>Rs.</span>
+                    <input type="text" value={calcValuation} onChange={e => setCalcValuation(e.target.value.replace(/[^0-9]/g, ''))} placeholder="5,000,000" 
+                      style={{ width: '100%', padding: '14px 16px 14px 45px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', background: '#f8fafc', transition: 'all 0.2s', outline: 'none' }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.boxShadow = 'none'; }}
+                    />
+                  </div>
                 </div>
-                <div className="field" style={{ marginTop: 0 }}>
-                  <label style={{ color: 'var(--brand-red)' }}>Real Price (ඇත්තම ගාන)</label>
-                  <input type="text" value={calcRealPrice} onChange={e => setCalcRealPrice(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 4,500,000" style={{ borderColor: 'var(--brand-red)', backgroundColor: '#fff4f4' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#e50000', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Real Price <span style={{ textTransform: 'none', opacity: 0.8 }}>(ඇත්තම ගාන)</span></label>
+                  <div style={{ position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#e50000', fontWeight: 600 }}>Rs.</span>
+                    <input type="text" value={calcRealPrice} onChange={e => setCalcRealPrice(e.target.value.replace(/[^0-9]/g, ''))} placeholder="4,500,000" 
+                      style={{ width: '100%', padding: '14px 16px 14px 45px', borderRadius: '12px', border: '1px solid #fecaca', fontSize: '1.05rem', fontWeight: 700, color: '#991b1b', background: '#fef2f2', transition: 'all 0.2s', outline: 'none' }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = '#ef4444'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.boxShadow = 'none'; }}
+                    />
+                  </div>
                 </div>
-                <div className="field" style={{ marginTop: 0 }}>
-                  <label>Leasing Rate per Lakh (ලීසිං වාරිකය)</label>
-                  <input type="text" value={calcLeasingRate} onChange={e => setCalcLeasingRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2500" />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Leasing Rate <span style={{ textTransform: 'none', color: '#94a3b8' }}>(ලීසිං වාරිකය)</span></label>
+                  <input type="text" value={calcLeasingRate} onChange={e => setCalcLeasingRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2500" 
+                    style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', background: '#f8fafc', transition: 'all 0.2s', outline: 'none' }}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.boxShadow = 'none'; }}
+                  />
                 </div>
-                <div className="field" style={{ marginTop: 0 }}>
-                  <label>Loan Rate per Lakh (ලෝන් වාරිකය)</label>
-                  <input type="text" value={calcLoanRate} onChange={e => setCalcLoanRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2000" />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Loan Rate <span style={{ textTransform: 'none', color: '#94a3b8' }}>(ලෝන් වාරිකය)</span></label>
+                  <input type="text" value={calcLoanRate} onChange={e => setCalcLoanRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2000" 
+                    style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', background: '#f8fafc', transition: 'all 0.2s', outline: 'none' }}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.boxShadow = 'none'; }}
+                  />
                 </div>
               </div>
 
               {/* Results */}
-              <div style={{ marginTop: '24px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '20px' }}>
-                <h4 style={{ margin: '0 0 16px 0', color: '#334155', borderBottom: '2px solid #e2e8f0', paddingBottom: '8px' }}>Calculation Breakdown</h4>
+              <div style={{ marginTop: '32px', background: 'linear-gradient(to bottom, #f8fafc, #f1f5f9)', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)' }}>
+                <h4 style={{ margin: '0 0 20px 0', color: '#1e293b', fontSize: '1.1rem', borderBottom: '2px dashed #cbd5e1', paddingBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  📊 Calculation Breakdown
+                </h4>
                 
                 {(() => {
                   const realPrice = Number(calcRealPrice) || 0;
@@ -865,23 +909,30 @@ export default function AddVehiclePage() {
                   const totalMonthly = leasingMonthly + loanMonthly;
 
                   return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.95rem' }}>
-                      <div className="flex-between">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '1rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', padding: '12px 16px', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
                         <span style={{ color: '#64748b', fontWeight: 600 }}>Downpayment (අතින්):</span>
-                        <span style={{ fontWeight: 800 }}>Rs. {displayDownpayment.toLocaleString('en-LK')} <span style={{ color: '#64748b', fontSize: '0.85rem' }}>({(displayDownpayment / 100000).toFixed(1)} LKR Lakhs)</span></span>
+                        <div style={{ textAlign: 'right' }}>
+                          <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '1.1rem' }}>Rs. {displayDownpayment.toLocaleString('en-LK')}</div>
+                          <div style={{ color: '#3b82f6', fontSize: '0.85rem', fontWeight: 700 }}>({(displayDownpayment / 100000).toFixed(1)} LKR Lakhs)</div>
+                        </div>
                       </div>
-                      <div className="flex-between">
-                        <span style={{ color: '#64748b' }}>Leasing Amount (40% of Valuation):</span>
-                        <span style={{ fontWeight: 600 }}>Rs. {leasingAmt.toLocaleString('en-LK')}</span>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 8px' }}>
+                        <span style={{ color: '#64748b', fontSize: '0.95rem' }}>Leasing Amount <span style={{ opacity: 0.6 }}>(40% of Val)</span>:</span>
+                        <span style={{ fontWeight: 600, color: '#334155' }}>Rs. {leasingAmt.toLocaleString('en-LK')}</span>
                       </div>
-                      <div className="flex-between">
-                        <span style={{ color: '#64748b' }}>Loan Amount (20% of Valuation):</span>
-                        <span style={{ fontWeight: 600 }}>Rs. {loanAmt.toLocaleString('en-LK')}</span>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 8px' }}>
+                        <span style={{ color: '#64748b', fontSize: '0.95rem' }}>Loan Amount <span style={{ opacity: 0.6 }}>(20% of Val)</span>:</span>
+                        <span style={{ fontWeight: 600, color: '#334155' }}>Rs. {loanAmt.toLocaleString('en-LK')}</span>
                       </div>
-                      <div style={{ height: '1px', background: '#e2e8f0', margin: '4px 0' }} />
-                      <div className="flex-between" style={{ fontSize: '1.25rem', color: 'var(--brand-red)' }}>
-                        <span style={{ fontWeight: 800 }}>Total Monthly Payment:</span>
-                        <span style={{ fontWeight: 900 }}>Rs. {totalMonthly.toLocaleString('en-LK')}</span>
+
+                      <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, #cbd5e1, transparent)', margin: '8px 0' }} />
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff0f0', border: '1px solid #fecaca', padding: '16px 20px', borderRadius: '12px' }}>
+                        <span style={{ fontWeight: 800, color: '#b91c1c', fontSize: '1.15rem' }}>Total Monthly:</span>
+                        <span style={{ fontWeight: 900, color: '#e50000', fontSize: '1.4rem' }}>Rs. {totalMonthly.toLocaleString('en-LK')}</span>
                       </div>
 
                       <button 
@@ -892,9 +943,18 @@ export default function AddVehiclePage() {
                           setMonthlyPayment(Math.round(totalMonthly).toString());
                           setShowCalculator(false);
                         }}
-                        style={{ marginTop: '16px', background: 'var(--brand-red)', color: 'white', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', display: 'flex', justifyContent: 'center', gap: '8px' }}
+                        style={{ 
+                          marginTop: '20px', 
+                          background: 'linear-gradient(135deg, #e50000 0%, #cc0000 100%)', 
+                          color: 'white', border: 'none', padding: '16px', borderRadius: '12px', 
+                          fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px',
+                          boxShadow: '0 10px 20px -5px rgba(229, 0, 0, 0.3)',
+                          transition: 'transform 0.2s, box-shadow 0.2s'
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 15px 25px -5px rgba(229, 0, 0, 0.4)'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 20px -5px rgba(229, 0, 0, 0.3)'; }}
                       >
-                        ⚡ Use this Downpayment ({((displayDownpayment / 100000)).toFixed(1)} Lakhs) & Monthly Payment
+                        ⚡ Apply Downpayment & Installment
                       </button>
                     </div>
                   );
