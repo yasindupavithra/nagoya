@@ -541,7 +541,6 @@ main {
 }
 
 .desktop-side-col {
-  flex: 1;
   display: flex;
 }
 
@@ -556,7 +555,6 @@ main {
 
 @media (max-width: 992px) {
   .desktop-side-col {
-    flex: none;
     display: block;
   }
 

@@ -61,7 +61,7 @@ export default function Header() {
           </a>
         </div>
       </div>
-      <div className="container nav-bar">
+      <div className="container nav-bar" style={{ position: 'relative' }}>
         <div className="mobile-left-spacer"></div>
         <div className="desktop-side-col left">
           <a href="/" className="brand-group">
@@ -76,7 +76,7 @@ export default function Header() {
           </a>
         </div>
 
-        <div className="hidden-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', flexShrink: 0, margin: '0 20px' }}>
+        <div className="hidden-mobile" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           <div style={{ display: 'flex', gap: '14px' }}>
             <img src="https://flagcdn.com/w80/jp.png" alt="Japan" style={{ height: '32px', width: '48px', objectFit: 'cover', border: '1px solid #e0e0e0', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }} />
             <img src="https://flagcdn.com/w80/de.png" alt="Germany" style={{ height: '32px', width: '48px', objectFit: 'cover', border: '1px solid #e0e0e0', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }} />
