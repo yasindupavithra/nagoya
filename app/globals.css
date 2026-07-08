@@ -527,6 +527,7 @@ main {
   border-radius: var(--radius-full);
   transition: all var(--duration-fast) var(--ease-out);
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
