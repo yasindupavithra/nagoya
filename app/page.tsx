@@ -174,9 +174,10 @@ export default function HomePage() {
           animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both'
         }}>
           <Image
-            src="/Gemini_Generated_Image_ewmootewmootewmo.png"
+            src="/Poster/Gemini_Generated_Image_mrdleamrdleamrdl.png"
             alt="Promotional Banner"
             fill
+            quality={100}
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         </div>

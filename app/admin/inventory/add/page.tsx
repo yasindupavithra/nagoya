@@ -852,9 +852,13 @@ export default function AddVehiclePage() {
                 
                 {(() => {
                   const realPrice = Number(calcRealPrice) || 0;
-                  const downPayment = realPrice * 0.4;
-                  const leasingAmt = realPrice * 0.4;
-                  const loanAmt = realPrice * 0.2;
+                  const valuationAmt = Number(calcValuation) || 0;
+                  
+                  const leasingAmt = valuationAmt * 0.4;
+                  const loanAmt = valuationAmt * 0.2;
+                  
+                  const downPayment = realPrice - (leasingAmt + loanAmt);
+                  const displayDownpayment = downPayment > 0 ? downPayment : 0;
                   
                   const leasingMonthly = (leasingAmt / 100000) * (Number(calcLeasingRate) || 0);
                   const loanMonthly = (loanAmt / 100000) * (Number(calcLoanRate) || 0);
@@ -863,15 +867,15 @@ export default function AddVehiclePage() {
                   return (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.95rem' }}>
                       <div className="flex-between">
-                        <span style={{ color: '#64748b', fontWeight: 600 }}>Downpayment (අතින් - 40%):</span>
-                        <span style={{ fontWeight: 800 }}>Rs. {downPayment.toLocaleString('en-LK')} <span style={{ color: '#64748b', fontSize: '0.85rem' }}>({(downPayment / 100000).toFixed(1)} LKR Lakhs)</span></span>
+                        <span style={{ color: '#64748b', fontWeight: 600 }}>Downpayment (අතින්):</span>
+                        <span style={{ fontWeight: 800 }}>Rs. {displayDownpayment.toLocaleString('en-LK')} <span style={{ color: '#64748b', fontSize: '0.85rem' }}>({(displayDownpayment / 100000).toFixed(1)} LKR Lakhs)</span></span>
                       </div>
                       <div className="flex-between">
-                        <span style={{ color: '#64748b' }}>Leasing Amount (40%):</span>
+                        <span style={{ color: '#64748b' }}>Leasing Amount (40% of Valuation):</span>
                         <span style={{ fontWeight: 600 }}>Rs. {leasingAmt.toLocaleString('en-LK')}</span>
                       </div>
                       <div className="flex-between">
-                        <span style={{ color: '#64748b' }}>Loan Amount (20%):</span>
+                        <span style={{ color: '#64748b' }}>Loan Amount (20% of Valuation):</span>
                         <span style={{ fontWeight: 600 }}>Rs. {loanAmt.toLocaleString('en-LK')}</span>
                       </div>
                       <div style={{ height: '1px', background: '#e2e8f0', margin: '4px 0' }} />
@@ -883,14 +887,14 @@ export default function AddVehiclePage() {
                       <button 
                         type="button" 
                         onClick={() => {
-                          const lakhs = (downPayment / 100000).toFixed(1);
+                          const lakhs = (displayDownpayment / 100000).toFixed(1);
                           setInitialPayment(lakhs.endsWith('.0') ? lakhs.split('.')[0] : lakhs);
                           setMonthlyPayment(Math.round(totalMonthly).toString());
                           setShowCalculator(false);
                         }}
                         style={{ marginTop: '16px', background: 'var(--brand-red)', color: 'white', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', display: 'flex', justifyContent: 'center', gap: '8px' }}
                       >
-                        ⚡ Use this Downpayment ({((downPayment / 100000)).toFixed(1)} Lakhs) & Monthly Payment
+                        ⚡ Use this Downpayment ({((displayDownpayment / 100000)).toFixed(1)} Lakhs) & Monthly Payment
                       </button>
                     </div>
                   );

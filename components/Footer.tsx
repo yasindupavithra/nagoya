@@ -70,12 +70,12 @@ export default function Footer() {
             </div>
             <div className="footer-contact-item">
               <a href="https://www.tiktok.com/@nagoyaautoauction?_r=1&_t=ZS-97hgzskOLw8" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFFFFF" viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg>
                 <span style={{ fontSize: '1.05rem' }}>Follow on TikTok</span>
               </a>
             </div>
             <div className="footer-contact-item">📍 Munagama, Horana, Sri Lanka</div>
-            <div className="footer-contact-item">🕐 Mon-Sat: 8AM - 6PM</div>
+            <div className="footer-contact-item">🕐 Mon-Sat: 7.00 AM to 8.00 PM</div>
           </div>
         </div>
         <div className="footer-bottom">
