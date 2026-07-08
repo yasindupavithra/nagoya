@@ -96,8 +96,11 @@ export default function AdminDashboardPage() {
             {/* Recent Inquiries */}
             <div className="card panel">
               <div className="flex-between" style={{ marginBottom: 16 }}>
-                <h3 style={{ margin: 0 }}>Recent Inquiries</h3>
-                <span className="tag-pill">{inquiries.length} total</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <h3 style={{ margin: 0 }}>Recent Inquiries</h3>
+                  <span className="tag-pill">{inquiries.length} total</span>
+                </div>
+                <a href="/admin/inquiries" className="button sm outline">View All →</a>
               </div>
               {inquiries.length === 0 ? (
                 <p className="text-muted" style={{ padding: '24px 0', textAlign: 'center' }}>No inquiries yet</p>
