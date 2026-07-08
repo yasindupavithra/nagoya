@@ -246,7 +246,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="search-actions">
-            <a href="/inventory" className="button danger lg main-search-btn" style={{ flex: 1 }}>
+            <a href="/inventory" className="button danger lg" style={{ flex: 1 }}>
               🔍 Find Your Perfect Car
             </a>
           </div>

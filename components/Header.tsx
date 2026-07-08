@@ -92,7 +92,6 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={pathname === item.href ? 'active' : ''}
-                style={item.label === 'Contact' ? { marginLeft: '24px' } : undefined}
               >
                 {item.label}
               </a>
