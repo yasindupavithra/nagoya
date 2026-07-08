@@ -541,6 +541,7 @@ main {
 }
 
 .desktop-side-col {
+  flex: 1;
   display: flex;
 }
 
@@ -553,8 +554,16 @@ main {
   align-items: center;
 }
 
+@media (max-width: 1200px) {
+  .nav-links a {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
+
 @media (max-width: 992px) {
   .desktop-side-col {
+    flex: none;
     display: block;
   }
 
