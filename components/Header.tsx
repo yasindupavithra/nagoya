@@ -63,7 +63,7 @@ export default function Header() {
       </div>
       <div className="container nav-bar">
         <div className="mobile-left-spacer"></div>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+        <div className="desktop-side-col left">
           <a href="/" className="brand-group">
             <img 
               src="/logo.png" 
@@ -85,7 +85,7 @@ export default function Header() {
           <span style={{ fontSize: '13px', color: '#777', fontWeight: 600, letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>Japan | Germany | United Kingdom</span>
         </div>
 
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <div className="desktop-side-col right">
           <nav className="nav-links">
             {navItems.map((item) => (
               <a

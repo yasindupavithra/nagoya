@@ -539,6 +539,28 @@ main {
   background: rgba(211, 47, 47, 0.08);
 }
 
+.desktop-side-col {
+  flex: 1;
+  display: flex;
+}
+.desktop-side-col.left {
+  justify-content: flex-start;
+}
+.desktop-side-col.right {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .desktop-side-col {
+    flex: none;
+    display: block;
+  }
+  .desktop-side-col.right {
+    display: none !important;
+  }
+}
+
 .nav-admin {
   margin-left: 8px;
 }
