@@ -40,6 +40,10 @@ export const metadata: Metadata = {
     description: 'Find certified Japanese cars with transparent pricing. Browse inventory, calculate leases, and get verified inspection reports.',
     images: ['/Gemini_Generated_Image_ewmootewmootewmo.png'],
   },
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
