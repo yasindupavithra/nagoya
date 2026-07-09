@@ -54,12 +54,19 @@ function resizeAndGetBlob(file: File, maxWidth = 800, maxHeight = 600, quality =
 }
 
 
+const formatNumberWithCommas = (val: string | number) => {
+  if (!val) return '';
+  const parts = val.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join('.');
+};
+
 const brands = ['Toyota', 'Nissan', 'Honda', 'Mitsubishi', 'Suzuki', 'Mazda', 'Subaru', 'Daihatsu', 'Lexus', 'Mercedes-Benz', 'BMW', 'Audi', 'Kia', 'Hyundai', 'Peugeot', 'Ford', 'Land Rover', 'Range Rover', 'MG', 'DFSK', 'Tata', 'Mahindra', 'Micro', 'Renault', 'Volvo', 'Jeep', 'Porsche', 'Chevrolet', 'Isuzu'];
 const bodyTypes = ['Sedan', 'Hatchback', 'SUV', 'Compact', 'Van', 'Wagon', 'Pickup'];
 const fuelTypes = ['Petrol', 'Hybrid', 'Diesel', 'Electric'];
 const transmissions = ['Auto', 'Manual'];
 const locations = ['Malabe', 'Horana', 'Colombo', 'Negombo', 'Kandy', 'Galle'];
-const statusOptions = ['Registered', 'Unregistered'];
+const statusOptions = ['Registered', 'Unregistered', 'Used'];
 
 export default function AddVehiclePage() {
   const router = useRouter();
@@ -111,7 +118,7 @@ export default function AddVehiclePage() {
   const [calcValuation, setCalcValuation] = useState('');
   const [calcRealPrice, setCalcRealPrice] = useState('');
   const [calcLeasingRate, setCalcLeasingRate] = useState('');
-  const [calcLoanRate, setCalcLoanRate] = useState('');
+  const [calcLoanRate, setCalcLoanRate] = useState('1500');
 
 
   useEffect(() => {
@@ -390,7 +397,7 @@ export default function AddVehiclePage() {
                       <input 
                         type="text"
                         inputMode="numeric"
-                        value={price} 
+                        value={formatNumberWithCommas(price)} 
                         onChange={(e) => {
                           const val = e.target.value.replace(/[^0-9]/g, '');
                           setPrice(val);
@@ -405,7 +412,7 @@ export default function AddVehiclePage() {
                       <input 
                         type="text"
                         inputMode="numeric"
-                        value={initialPayment} 
+                        value={formatNumberWithCommas(initialPayment)} 
                         onChange={(e) => {
                           const val = e.target.value.replace(/[^0-9.]/g, '');
                           setInitialPayment(val);
@@ -424,7 +431,7 @@ export default function AddVehiclePage() {
                       <input 
                         type="text"
                         inputMode="numeric"
-                        value={monthlyPayment} 
+                        value={formatNumberWithCommas(monthlyPayment)} 
                         onChange={(e) => {
                           const val = e.target.value.replace(/[^0-9]/g, '');
                           setMonthlyPayment(val);
@@ -438,7 +445,7 @@ export default function AddVehiclePage() {
                       <input 
                         type="text"
                         inputMode="numeric"
-                        value={mileage} 
+                        value={formatNumberWithCommas(mileage)} 
                         onChange={(e) => {
                           const val = e.target.value.replace(/[^0-9]/g, '');
                           setMileage(val);
@@ -452,7 +459,7 @@ export default function AddVehiclePage() {
                       <label>Engine CC</label>
                       <input 
                         type="text" 
-                        value={cc} 
+                        value={formatNumberWithCommas(cc)} 
                         onChange={(e) => setCc(e.target.value)} 
                         placeholder="e.g. 1500, 2000" 
                       />
@@ -849,7 +856,7 @@ export default function AddVehiclePage() {
                   <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Valuation Amount <span style={{ textTransform: 'none', color: '#94a3b8' }}>(තක්සේරු මුදල)</span></label>
                   <div style={{ position: 'relative' }}>
                     <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', fontWeight: 600 }}>Rs.</span>
-                    <input type="text" value={calcValuation} onChange={e => setCalcValuation(e.target.value.replace(/[^0-9]/g, ''))} placeholder="5,000,000" 
+                    <input type="text" value={formatNumberWithCommas(calcValuation)} onChange={e => setCalcValuation(e.target.value.replace(/[^0-9]/g, ''))} placeholder="5,000,000" 
                       style={{ width: '100%', padding: '14px 16px 14px 45px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', background: '#f8fafc', transition: 'all 0.2s', outline: 'none' }}
                       onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'; }}
                       onBlur={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -861,7 +868,7 @@ export default function AddVehiclePage() {
                   <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#e50000', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Real Price <span style={{ textTransform: 'none', opacity: 0.8 }}>(ඇත්තම ගාන)</span></label>
                   <div style={{ position: 'relative' }}>
                     <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#e50000', fontWeight: 600 }}>Rs.</span>
-                    <input type="text" value={calcRealPrice} onChange={e => setCalcRealPrice(e.target.value.replace(/[^0-9]/g, ''))} placeholder="4,500,000" 
+                    <input type="text" value={formatNumberWithCommas(calcRealPrice)} onChange={e => setCalcRealPrice(e.target.value.replace(/[^0-9]/g, ''))} placeholder="4,500,000" 
                       style={{ width: '100%', padding: '14px 16px 14px 45px', borderRadius: '12px', border: '1px solid #fecaca', fontSize: '1.05rem', fontWeight: 700, color: '#991b1b', background: '#fef2f2', transition: 'all 0.2s', outline: 'none' }}
                       onFocus={(e) => { e.currentTarget.style.borderColor = '#ef4444'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)'; }}
                       onBlur={(e) => { e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -871,7 +878,7 @@ export default function AddVehiclePage() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Leasing Rate <span style={{ textTransform: 'none', color: '#94a3b8' }}>(ලීසිං වාරිකය)</span></label>
-                  <input type="text" value={calcLeasingRate} onChange={e => setCalcLeasingRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2500" 
+                  <input type="text" value={formatNumberWithCommas(calcLeasingRate)} onChange={e => setCalcLeasingRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2500" 
                     style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', background: '#f8fafc', transition: 'all 0.2s', outline: 'none' }}
                     onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'; }}
                     onBlur={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -880,7 +887,7 @@ export default function AddVehiclePage() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Loan Rate <span style={{ textTransform: 'none', color: '#94a3b8' }}>(ලෝන් වාරිකය)</span></label>
-                  <input type="text" value={calcLoanRate} onChange={e => setCalcLoanRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 2000" 
+                  <input type="text" value={formatNumberWithCommas(calcLoanRate)} onChange={e => setCalcLoanRate(e.target.value.replace(/[^0-9]/g, ''))} placeholder="e.g. 1500" 
                     style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', background: '#f8fafc', transition: 'all 0.2s', outline: 'none' }}
                     onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'; }}
                     onBlur={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.boxShadow = 'none'; }}

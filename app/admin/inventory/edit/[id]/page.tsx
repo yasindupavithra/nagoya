@@ -55,12 +55,20 @@ function resizeAndGetBlob(file: File, maxWidth = 800, maxHeight = 600, quality =
 }
 
 
+const formatNumberWithCommas = (val: string | number) => {
+  if (val === undefined || val === null || val === '') return '';
+  if (val === 0) return '0';
+  const parts = val.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join('.');
+};
+
 const brands = ['Toyota', 'Nissan', 'Honda', 'Mitsubishi', 'Suzuki', 'Mazda', 'Subaru', 'Daihatsu', 'Lexus', 'Mercedes-Benz', 'BMW', 'Audi', 'Kia', 'Hyundai', 'Peugeot', 'Ford', 'Land Rover', 'Range Rover', 'MG', 'DFSK', 'Tata', 'Mahindra', 'Micro', 'Renault', 'Volvo', 'Jeep', 'Porsche', 'Chevrolet', 'Isuzu'];
 const bodyTypes = ['Sedan', 'Hatchback', 'SUV', 'Compact', 'Van', 'Wagon', 'Pickup'];
 const fuelTypes = ['Petrol', 'Hybrid', 'Diesel', 'Electric'];
 const transmissions = ['Auto', 'Manual'];
 const locations = ['Malabe', 'Horana', 'Colombo', 'Negombo', 'Kandy', 'Galle'];
-const statusOptions = ['Registered', 'Unregistered'];
+const statusOptions = ['Registered', 'Unregistered', 'Used'];
 
 export default function EditVehiclePage() {
   const params = useParams();
@@ -455,9 +463,10 @@ export default function EditVehiclePage() {
                     <div className="field" style={{ marginTop: 0 }}>
                       <label>Price (LKR)</label>
                       <input 
-                        type="number" 
-                        value={price} 
-                        onChange={(e) => setPrice(Number(e.target.value))} 
+                        type="text"
+                        inputMode="numeric"
+                        value={formatNumberWithCommas(price)} 
+                        onChange={(e) => setPrice(Number(e.target.value.replace(/[^0-9]/g, '')))} 
                         required 
                       />
                     </div>
@@ -465,9 +474,13 @@ export default function EditVehiclePage() {
                     <div className="field" style={{ marginTop: 0 }}>
                       <label>Initial Payment (in Lakhs) / අතින් දෙන ගාණ (ලක්ෂ වලින්)</label>
                       <input 
-                        type="number" 
-                        value={initialPayment} 
-                        onChange={(e) => setInitialPayment(e.target.value === '' ? '' : Number(e.target.value))} 
+                        type="text"
+                        inputMode="numeric"
+                        value={formatNumberWithCommas(initialPayment)} 
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9.]/g, '');
+                          setInitialPayment(val === '' ? '' : Number(val));
+                        }} 
                         placeholder="e.g. 36 (for 3.6 Million)"
                       />
                       {initialPayment !== '' && Number(initialPayment) > 0 && (
@@ -480,9 +493,10 @@ export default function EditVehiclePage() {
                     <div className="field" style={{ marginTop: 0 }}>
                       <label>Mileage (km)</label>
                       <input 
-                        type="number" 
-                        value={mileage} 
-                        onChange={(e) => setMileage(Number(e.target.value))} 
+                        type="text"
+                        inputMode="numeric"
+                        value={formatNumberWithCommas(mileage)} 
+                        onChange={(e) => setMileage(Number(e.target.value.replace(/[^0-9]/g, '')))} 
                         required 
                       />
                     </div>
@@ -491,7 +505,7 @@ export default function EditVehiclePage() {
                       <label>Engine CC</label>
                       <input 
                         type="text" 
-                        value={cc} 
+                        value={formatNumberWithCommas(cc)} 
                         onChange={(e) => setCc(e.target.value)} 
                       />
                     </div>

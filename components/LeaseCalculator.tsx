@@ -1,5 +1,13 @@
 'use client';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+
+const formatNumberWithCommas = (val: string | number) => {
+  if (val === undefined || val === null || val === '') return '';
+  if (val === 0) return '0';
+  const parts = val.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join('.');
+};
 
 export default function LeaseCalculator({ price, downPayment, years, onDownPaymentChange, onYearsChange }: {
   price: number;
@@ -37,11 +45,10 @@ export default function LeaseCalculator({ price, downPayment, years, onDownPayme
       <div className="field" style={{ marginTop: 8 }}>
         <label>Down Payment (LKR)</label>
         <input
-          type="number"
-          value={downPayment}
-          min={0}
-          max={price}
-          onChange={(e) => onDownPaymentChange(Number(e.target.value))}
+          type="text"
+          inputMode="numeric"
+          value={formatNumberWithCommas(downPayment)}
+          onChange={(e) => onDownPaymentChange(Number(e.target.value.replace(/[^0-9]/g, '')))}
         />
         <p className="field-hint">₨{downPayment.toLocaleString('en-LK')}</p>
       </div>

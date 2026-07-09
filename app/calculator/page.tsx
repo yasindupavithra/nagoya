@@ -4,14 +4,14 @@ import { useState } from 'react';
 
 export default function CalculatorPage() {
   // Quote Form State
-  const [quoteForm, setQuoteForm] = useState({
-    name: '', whatsapp: '', make: '', model: '', year: '', engine: '', color: '', grade: '', notes: ''
+  const [quoteForm, setQuoteForm] = useState<any>({
+    name: '', whatsapp: '', make: '', model: '', year: '', engine: '', color: '', grade: ['S', '6', '5', '4.5', '4', '3.5', 'RA', 'R'], notes: ''
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSending, setIsSending] = useState(false);
 
   const handleQuoteChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setQuoteForm(prev => ({ ...prev, [field]: e.target.value }));
+    setQuoteForm((prev: any) => ({ ...prev, [field]: e.target.value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
@@ -59,7 +59,7 @@ Model: ${model}
 Year: ${year || 'N/A'}
 Engine: ${engine || 'N/A'}
 Color: ${color || 'N/A'}
-Auction Grade: ${grade || 'N/A'}
+Auction Grade: ${Array.isArray(grade) ? grade.join(', ') : grade || 'N/A'}
 
 *Additional Notes:*
 ${notes || 'None'}`;
@@ -110,7 +110,7 @@ ${notes || 'None'}`;
                 <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>Year</label>
                 <select value={quoteForm.year} onChange={handleQuoteChange('year')} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none', backgroundColor: '#fff' }}>
                   <option value="">Select Year</option>
-                  {[2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017].map(y => <option key={y} value={y}>{y}</option>)}
+                  {[2027, 2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017].map(y => <option key={y} value={y}>{y}</option>)}
                 </select>
               </div>
               <div>
@@ -124,18 +124,38 @@ ${notes || 'None'}`;
                 <input value={quoteForm.color} onChange={handleQuoteChange('color')} type="text" placeholder="e.g., White" style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none' }} />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>Auction Grade</label>
-                <select value={quoteForm.grade} onChange={handleQuoteChange('grade')} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none', backgroundColor: '#fff' }}>
-                  <option value="">Select Grade</option>
-                  <option value="S">S</option>
-                  <option value="6">6</option>
-                  <option value="5">5</option>
-                  <option value="4.5">4.5</option>
-                  <option value="4">4</option>
-                  <option value="3.5">3.5</option>
-                  <option value="3">3</option>
-                  <option value="R">R</option>
-                </select>
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#333', marginBottom: '8px' }}>Auction Grades (Select multiple)</label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                  {['S', '6', '5', '4.5', '4', '3.5', 'RA', 'R'].map(g => (
+                    <label key={g} style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      padding: '10px 4px', border: quoteForm.grade.includes(g) ? '2px solid #002147' : '1px solid #ddd', 
+                      borderRadius: '8px', cursor: 'pointer', 
+                      backgroundColor: quoteForm.grade.includes(g) ? '#F5A623' : '#fff',
+                      color: quoteForm.grade.includes(g) ? '#002147' : '#555',
+                      fontWeight: quoteForm.grade.includes(g) ? 700 : 500,
+                      transition: 'all 0.2s', userSelect: 'none',
+                      boxShadow: quoteForm.grade.includes(g) ? '0 4px 10px rgba(245, 166, 35, 0.3)' : 'none'
+                    }}>
+                      <input 
+                        type="checkbox" 
+                        checked={quoteForm.grade.includes(g)}
+                        onChange={(e) => {
+                          const currentGrades = [...quoteForm.grade];
+                          if (e.target.checked) {
+                            currentGrades.push(g);
+                          } else {
+                            const index = currentGrades.indexOf(g);
+                            if (index > -1) currentGrades.splice(index, 1);
+                          }
+                          setQuoteForm((prev: any) => ({ ...prev, grade: currentGrades }));
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                      {g}
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
             <div>

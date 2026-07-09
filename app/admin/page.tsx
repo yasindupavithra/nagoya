@@ -96,11 +96,8 @@ export default function AdminDashboardPage() {
             {/* Recent Inquiries */}
             <div className="card panel">
               <div className="flex-between" style={{ marginBottom: 16 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <h3 style={{ margin: 0 }}>Recent Inquiries</h3>
-                  <span className="tag-pill">{inquiries.length} total</span>
-                </div>
-                <a href="/admin/inquiries" className="button sm outline">View All →</a>
+                <h3 style={{ margin: 0 }}>Recent Inquiries</h3>
+                <span className="tag-pill">{inquiries.length} total</span>
               </div>
               {inquiries.length === 0 ? (
                 <p className="text-muted" style={{ padding: '24px 0', textAlign: 'center' }}>No inquiries yet</p>
@@ -110,26 +107,26 @@ export default function AdminDashboardPage() {
                     const v = vehicles.find(veh => veh.id === inq.vehicleId);
                     const vehicleName = v ? `${v.brand} ${v.model} ${v.year}` : `Vehicle ID: ${inq.vehicleId}`;
                     return (
-                    <div key={inq.id || inq.vehicleId + inq.buyerName} className="flex-between" style={{ padding: '12px 14px', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)' }}>
-                      <div>
-                        <strong style={{ fontSize: '0.95rem', color: '#111' }}>{inq.buyerName}</strong>
-                        <p className="text-muted" style={{ margin: '4px 0 0', fontSize: '0.85rem' }}>{inq.buyerPhone}</p>
-                        <p style={{ margin: '6px 0 0', fontSize: '0.85rem', color: '#e50000', fontWeight: 600 }}>{vehicleName}</p>
-                        <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: '#444' }}>{inq.message}</p>
+                      <div key={inq.id || inq.vehicleId + inq.buyerName} className="flex-between" style={{ padding: '12px 14px', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)' }}>
+                        <div>
+                          <strong style={{ fontSize: '0.95rem', color: '#111' }}>{inq.buyerName}</strong>
+                          <p className="text-muted" style={{ margin: '4px 0 0', fontSize: '0.85rem' }}>{inq.buyerPhone}</p>
+                          <p style={{ margin: '6px 0 0', fontSize: '0.85rem', color: '#e50000', fontWeight: 600 }}>{vehicleName}</p>
+                          <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: '#444' }}>{inq.message}</p>
+                        </div>
+                        {inq.id && (
+                          <button
+                            className="button sm outline"
+                            onClick={() => {
+                              deleteInquiry(inq.id!).then(() => {
+                                setInquiries((prev) => prev.filter((i) => i.id !== inq.id));
+                              }).catch(console.error);
+                            }}
+                          >
+                            ✕
+                          </button>
+                        )}
                       </div>
-                      {inq.id && (
-                        <button
-                          className="button sm outline"
-                          onClick={() => {
-                            deleteInquiry(inq.id!).then(() => {
-                              setInquiries((prev) => prev.filter((i) => i.id !== inq.id));
-                            }).catch(console.error);
-                          }}
-                        >
-                          ✕
-                        </button>
-                      )}
-                    </div>
                     );
                   })}
                 </div>

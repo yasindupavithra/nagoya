@@ -174,7 +174,7 @@ export default function HomePage() {
           animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both'
         }}>
           <Image
-            src="/Poster/Gemini_Generated_Image_mrdleamrdleamrdl.png"
+            src="/Poster/Gemini_Generated_Image_9ituwk9ituwk9itu.png"
             alt="Promotional Banner"
             fill
             quality={100}
@@ -239,7 +239,7 @@ export default function HomePage() {
               <label>Year</label>
               <select value={yearFilter} onChange={(e) => setYearFilter(e.target.value)}>
                 <option value="">Any Year</option>
-                {[2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016].map((y) => (
+                {[2027, 2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016].map((y) => (
                   <option key={y} value={y}>{y}</option>
                 ))}
               </select>
