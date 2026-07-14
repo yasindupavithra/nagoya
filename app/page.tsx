@@ -54,6 +54,7 @@ export default function HomePage() {
   const [typeFilter, setTypeFilter] = useState('');
   const [yearFilter, setYearFilter] = useState('');
   const [conditionFilter, setConditionFilter] = useState('');
+  const [happyCustomers, setHappyCustomers] = useState<string[]>([]);
 
   // Hero section scroll-reveal
   const [heroVisible, setHeroVisible] = useState(false);
@@ -92,9 +93,16 @@ export default function HomePage() {
       .then(setVehicles)
       .catch(console.error)
       .finally(() => setIsLoadingVehicles(false));
+      
+    fetch('/api/customers', { cache: 'no-store' })
+      .then(res => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setHappyCustomers(data);
+        }
+      })
+      .catch(console.error);
   }, []);
-
-
 
   // Always show Firestore vehicles if loaded; fallback to sample only while loading
   const displayVehicles = isLoadingVehicles ? sampleVehicles : vehicles;
@@ -151,7 +159,7 @@ export default function HomePage() {
                 For All Your Vehicle Solutions
               </p>
               <h1 style={{ color: '#fff', fontSize: 'clamp(3.5rem, 7vw, 5.5rem)', lineHeight: 1.1, fontWeight: 800, margin: '0', textShadow: '0 4px 12px rgba(0,0,0,0.8)', letterSpacing: '-1px' }}>
-                Nagoya <span style={{ color: '#E52329' }}>Auto Auction</span>
+                Nagoya Global <span style={{ color: '#E52329' }}>Auto Auction</span>
               </h1>
             </div>
           </div>
@@ -427,9 +435,8 @@ export default function HomePage() {
         </div>
         <div className="customer-slider-container">
           <div className="customer-slider-track">
-            {/* Array of all customer images */}
             {(() => {
-              const customerImages = [
+              const customerImages = happyCustomers.length > 0 ? happyCustomers : [
                 'c1.png',
                 'c2.png',
                 'c3.png',
@@ -449,7 +456,6 @@ export default function HomePage() {
 
               return (
                 <>
-                  {/* First Set of Images */}
                   {customerImages.map((imgName, index) => (
                     <div key={`customer-a-${index}`} className="customer-slide">
                       <div className="customer-image-wrapper">

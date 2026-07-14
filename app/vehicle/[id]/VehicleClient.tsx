@@ -244,13 +244,17 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
               </div>
             )}
             {/* Description */}
-            <div style={{ marginBottom: '64px' }}>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid #eaeaea', color: '#111' }}>
+            <div style={{ marginBottom: '64px', backgroundColor: '#fafafa', padding: '32px', borderRadius: '16px', border: '1px solid #f0f0f0' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '24px', color: '#111' }}>
                 Description
               </h2>
-              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#444' }}>
-                {vehicle.description || `The ${vehicle.brand} ${vehicle.model} is a practical and highly efficient vehicle, well known for its excellent design and superior interior space. Despite its compact exterior size, it offers a roomy cabin with good headroom, comfortable seating, and flexible cargo space, making it ideal for city driving and daily use. It is easy to maneuver, economical to run, and highly reliable, which makes it a popular choice for families, first-time car owners, and urban commuters.`}
-              </p>
+              <div style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#444' }}>
+                {(vehicle.description || `The ${vehicle.brand} ${vehicle.model} is a practical and highly efficient vehicle, well known for its excellent design and superior interior space. Despite its compact exterior size, it offers a roomy cabin with good headroom, comfortable seating, and flexible cargo space, making it ideal for city driving and daily use. It is easy to maneuver, economical to run, and highly reliable, which makes it a popular choice for families, first-time car owners, and urban commuters.`).split('\n').map((paragraph, idx) => (
+                  <p key={idx} style={{ marginBottom: '16px' }}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
 
             {/* Specifications */}
@@ -301,7 +305,7 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
                 }}>
                   {vehicle.features
                     .join(' ')
-                    .split(/✔️|✓|✅|,/)
+                    .split(/✔️|✓|✅|,|🚙|⭐️|⭐|📍|⚡️|⚡|🔋|🤍|🚚|💎|✨|🌟|🚗|🔰|👉|🔘|🔴|⚫|⭕|🔹|🔸|\n/)
                     .map(f => f.trim())
                     .filter(f => f.length > 0)
                     .map((f, i) => (
@@ -364,6 +368,10 @@ export default function VehicleClient({ initialVehicle }: { initialVehicle: Vehi
                   padding: 0 
                 }}>
                   {vehicle.whyChooseUs
+                    .join(' ')
+                    .split(/✔️|✓|✅|,|🚙|⭐️|⭐|📍|⚡️|⚡|🔋|🤍|🚚|💎|✨|🌟|🚗|🔰|👉|🔘|🔴|⚫|⭕|🔹|🔸|\n/)
+                    .map(w => w.trim())
+                    .filter(w => w.length > 0)
                     .map((w, i) => (
                       <li key={i} style={{ 
                         display: 'flex', 
